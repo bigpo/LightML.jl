@@ -1,0 +1,12 @@
+name = "LightML"
+uuid = "f6bd875a-c04b-11e8-2398-95cbcec42194"
+authors = ["memoiry"]
+version = "0.2.0"
+
+[deps]
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
