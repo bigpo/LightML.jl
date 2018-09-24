@@ -46,7 +46,7 @@ function compose_sparse_Z_hat_matrix(X, landmarks, bandwidth, r)
     ZHat = zeros(size(similarities));
 
     for i in 1:(size(similarities,2))
-        topLandMarksIndices = selectperm(similarities[:,i], 1:r, rev=true);
+        topLandMarksIndices = partialsortperm(similarities[:,i], 1:r, rev=true);
         topLandMarksCoefficients = similarities[topLandMarksIndices, i];
         topLandMarksCoefficients = topLandMarksCoefficients / sum(topLandMarksCoefficients);
         ZHat[topLandMarksIndices,i] = topLandMarksCoefficients;
