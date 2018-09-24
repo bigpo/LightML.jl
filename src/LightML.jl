@@ -9,6 +9,7 @@ using PyPlot
 using DataStructures
 using Distances
 using Clustering
+import Printf
 
 @pyimport sklearn.datasets as dat
 

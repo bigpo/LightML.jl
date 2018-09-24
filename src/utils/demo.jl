@@ -110,12 +110,12 @@ function demo()
         if clf == "Logistic Regression"
             temp = accuracy(rescaled_y_test,y_pred[clf])
             st = temp * 100
-            st = @sprintf "%.3f" st
+            st = Printf.@sprintf "%.3f" st
             println("\t$(clf): $(st) %")
         else
             temp = accuracy(y_test,y_pred[clf])
             st = temp * 100
-            st = @sprintf "%.3f" st
+            st = Printf.@sprintf "%.3f" st
             println("\t$(clf): $(st) %")
         end
     end
