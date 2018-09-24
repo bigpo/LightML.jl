@@ -20,7 +20,7 @@ end
 function softmax(X::Matrix)
     n_sample = size(X,1)
     res = zeros(n_sample)
-    for i = 1:n_sample 
+    for i = 1:n_sample
         res[i] = softmax(X[i,:])
     end
     return res
@@ -29,7 +29,7 @@ end
 function calc_variance(X)
     n_sample = size(X,1)
     mean_ = repmat(mean(X, 1),n_sample,1)
-    de_mean = X - mean_ 
+    de_mean = X - mean_
     return 1/n_sample * diag(de_mean' * de_mean)
 end
 
@@ -76,7 +76,7 @@ function calc_entropy(y)
         p = num_feature / num_sample
         entro += - p * log2(p)
     end
-    return entro 
+    return entro
 end
 
 
@@ -132,7 +132,7 @@ function absolute_error(actual, predicted)
 end
 
 function classification_error(actual, predicted)
-    if size(actual,2) > 1 && length(actual) > 1 
+    if size(actual,2) > 1 && length(actual) > 1
         actual = unhot(actual)
         predicted = unhot(predicted)
     end
@@ -244,7 +244,3 @@ function make_digits()
                                                          rand_seed=1111)
     X_train, X_test, y_train, y_test
 end
-
-
-
-
