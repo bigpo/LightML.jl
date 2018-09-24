@@ -67,7 +67,7 @@ function log_pdf(model::NaiveBayes,
     mean_ = vec(model.class_mean[:,n])
     var_ = vec(model.class_var[:, n])
     d = sqrt(2*pi*var_)
-    n = exp(-((X-mean_).^2./(2*var_)))
+    n = exp(-((X - mean_).^2.0 / (2 * var_)))
     return log(n./d)
 end
 
