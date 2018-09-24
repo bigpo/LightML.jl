@@ -84,7 +84,7 @@ function test_LSC()
         datasets[i] = datasets[i] * ".csv"
     end
     for i in 1:4
-        datasets[i] = joinpath(path_, datasets[i])
+        datasets[i] = joinpath(@__DIR__, path_, datasets[i])
     end
     clusters = [4, 2, 4, 3]
     n_landmarks = [50, 150, 50, 50]
