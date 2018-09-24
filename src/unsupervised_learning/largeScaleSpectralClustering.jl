@@ -95,7 +95,7 @@ function test_LSC()
         data = DelimitedFiles.readdlm(datasets[i])
         data = transpose(convert(Array{Float64,2}, data[:,1:2]))
         model = LSC(n_clusters = clusters[i], n_landmarks = n_landmarks[i], bandwidth = bandwidth[i])
-        train!(model,data)
+        train!(model, copy(data))
         dataframe = DataFrame(x=data[1,:],y=data[2,:],group=model.cluster_result,datasets=data_name[i])
         if count == 0
             df = dataframe
