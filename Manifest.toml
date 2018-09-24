@@ -80,10 +80,12 @@ uuid = "34da2185-b29b-5c13-b0c7-acf172513d20"
 version = "1.1.0"
 
 [[Compose]]
-deps = ["Colors", "Compat", "DataStructures", "IterTools", "JSON", "Measures"]
-git-tree-sha1 = "9a77c574fd4b05a818be68f7781dcea8f8965181"
+deps = ["Base64", "Colors", "DataStructures", "Dates", "IterTools", "JSON", "Measures", "Printf", "Random", "Requires", "Test", "UUIDs"]
+git-tree-sha1 = "9725bf268247ccedb516dc8c034374d269c4b7b2"
+repo-rev = "master"
+repo-url = "https://github.com/GiovineItalia/Compose.jl.git"
 uuid = "a81c6b42-2e10-5240-aca2-a61377ecd94b"
-version = "0.6.1"
+version = "0.6.1+"
 
 [[Conda]]
 deps = ["Compat", "JSON", "VersionParsing"]
@@ -102,12 +104,6 @@ deps = ["Compat", "StatsBase"]
 git-tree-sha1 = "d56f26542bb7af9c0ec16e098a0a33352f3c9d8e"
 uuid = "7ad07ef1-bdf2-5661-9d2b-286fd4296dac"
 version = "0.1.0"
-
-[[DataArrays]]
-deps = ["Missings", "Reexport", "SpecialFunctions", "StatsBase"]
-git-tree-sha1 = "494cb14e8ca5912ded3652f11f9e67914c437a47"
-uuid = "0fe7c1db-08c2-54a3-a222-6d1d3b7a471a"
-version = "0.7.0"
 
 [[DataFrames]]
 deps = ["CategoricalArrays", "CodecZlib", "Compat", "DataStreams", "Dates", "InteractiveUtils", "LinearAlgebra", "Missings", "Pkg", "Printf", "Random", "Reexport", "SortingAlgorithms", "Statistics", "StatsBase", "Test", "TranscodingStreams", "Unicode", "WeakRefStrings"]
@@ -198,10 +194,12 @@ deps = ["Random"]
 uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
 [[Gadfly]]
-deps = ["Colors", "Compat", "Compose", "Contour", "CoupledFields", "DataArrays", "DataFrames", "DataStructures", "Distributions", "DocStringExtensions", "Hexagons", "IndirectArrays", "IterTools", "JSON", "Juno", "KernelDensity", "Loess", "Missings", "Showoff", "StatsBase"]
-git-tree-sha1 = "39b4c6cc4e049381cb8ed5c2048c929d15957c82"
+deps = ["Base64", "CategoricalArrays", "Colors", "Compat", "Compose", "Contour", "CoupledFields", "DataFrames", "DataStructures", "Dates", "Distributions", "DocStringExtensions", "Hexagons", "IndirectArrays", "IterTools", "JSON", "Juno", "KernelDensity", "LibGit2", "LinearAlgebra", "Loess", "Measures", "Printf", "Random", "Showoff", "Statistics", "StatsBase", "Test"]
+git-tree-sha1 = "0d732bbde1fdb1417c29d54cccc0df3932cd3275"
+repo-rev = "master"
+repo-url = "https://github.com/GiovineItalia/Gadfly.jl.git"
 uuid = "c91e804a-d5a3-530f-b6f0-dfbca275c004"
-version = "0.8.0"
+version = "0.8.0+"
 
 [[Hexagons]]
 deps = ["Test"]
@@ -414,6 +412,12 @@ deps = ["Pkg"]
 git-tree-sha1 = "7b1d07f411bc8ddb7977ec7f377b97b158514fe0"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
 version = "0.2.0"
+
+[[Requires]]
+deps = ["Test"]
+git-tree-sha1 = "f6fbf4ba64d295e146e49e021207993b6b48c7d1"
+uuid = "ae029012-a4dd-5104-9daa-d747884805df"
+version = "0.5.2"
 
 [[Rmath]]
 deps = ["BinaryProvider", "Libdl", "Pkg", "Random", "Statistics", "Test"]
