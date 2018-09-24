@@ -194,7 +194,7 @@ end
 
 
 function sigmoid(x)
-    return 1./(1+exp(-x))
+    return 1 / (1+exp(-x))
 end
 
 function sigmoid_prime(x)
