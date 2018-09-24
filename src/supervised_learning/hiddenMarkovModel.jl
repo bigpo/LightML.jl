@@ -17,16 +17,16 @@ function normalize(x)
 end
 
 
-# forward-backward algorithm for scoring and conditional probability 
+# forward-backward algorithm for scoring and conditional probability
 
 # Smoothing.
-# Input:  The HMM (state and observation maps, and probabilities) 
+# Input:  The HMM (state and observation maps, and probabilities)
 #         A list of T observations: E(0), E(1), ..., E(T-1)
 #
 # Ouptut: The posterior probability distribution over each state given all
 #         of the observations: P(X(k)|E(0), ..., E(T-1) for 0 <= k <= T-1.
 #
-#         These distributions should be returned as a list of lists. 
+#         These distributions should be returned as a list of lists.
 
 function scoring(model::Hmm)
     n_sample = size(model.data,1)
@@ -38,7 +38,7 @@ function scoring(model::Hmm)
     end
     score_alpha = sum(alpha[:, end])
     beta = zeros(n_state, n_sample)
-    beta[:, n_sample] =  ones(3) 
+    beta[:, n_sample] =  ones(3)
     for i = (n_sample-1):-1:1
         beta[:, i] = model.A * beta[:, i+1] .* model.B[:, model.e_to_i[model.data[i+1, 2]]]
     end
@@ -47,7 +47,7 @@ function scoring(model::Hmm)
     phi = alpha .* beta
     for i = 1:size(phi,2)
         phi[:,i] = normalize(phi[:, i])
-    end 
+    end
     return phi
 end
 
@@ -61,12 +61,12 @@ function matching(mode::Hmm)
     eta = zeros(n_state, n_sample)
     eta[:, 1] = zeros(3)
     for i = 2:n_sample
-        for j = 1:n_state 
+        for j = 1:n_state
             temp = phi[:, i-1] .* model.A[:, j]
             eta[j,i] = indmax(temp)
             phi[j,i] = maximum(temp)
         end
-        phi[:, i] = phi[:, i] .* model.B[:, model.e_to_i[model.data[i,2]]] 
+        phi[:, i] = phi[:, i] .* model.B[:, model.e_to_i[model.data[i,2]]]
         phi[:, i] = normalize(phi[:, i])
     end
     @show eta[:, 1:10]
@@ -136,12 +136,12 @@ function test_HMM()
                      0.2 0.6 0.2;
                      0.2 0.3 0.5]
 
-    # obs 
+    # obs
 
     weather_obs = [0.9 0.1 ;0.2 0.8 ;0.7 0.3]
 
     data = load_data("data/weather-test1-1000.txt")
-    model = Hmm(weatherObsMap, weatherObsIndex, weatherStateMap, 
+    model = Hmm(weatherObsMap, weatherObsIndex, weatherStateMap,
                 weatherStateIndex, weatherprob,
                 weather_trans, weather_obs, data)
 
@@ -149,15 +149,3 @@ function test_HMM()
 
     matching_state = matching(model)
 end
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,7 +1,7 @@
 
 mutable struct randomForest
     min_split::Int64
-    min_gain::Float64 
+    min_gain::Float64
     max_depth::Integer
     n_estimators::Int64
     max_features::Union{Int64, String}
@@ -45,7 +45,7 @@ function train!(model::randomForest, X::Matrix, y::Vector)
     end
 end
 
-function predict(model::randomForest, 
+function predict(model::randomForest,
                  x::Matrix)
     n_sample = size(x,1)
     res = zeros(n_sample, model.n_estimators)
@@ -85,16 +85,3 @@ function test_randomForest()
     train!(pcamodel, X_test)
     plot_in_2d(pcamodel, X_test, predictions, "RadomForest")
 end
-
-
-
-
-
-
-
-
-
-
-
-
-

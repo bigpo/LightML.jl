@@ -111,16 +111,3 @@ function test_LSC()
     set_default_plot_size(25cm, 14cm)
     Gadfly.plot(df, x="x", y = "y", color = "group",xgroup = "datasets", Geom.subplot_grid(Geom.point), Guide.title("Large Scale Spectral Clustering"))
 end
-
-
-
-
-
-
-
-
-
-
-
-
-

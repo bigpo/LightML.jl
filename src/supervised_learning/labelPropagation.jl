@@ -1,5 +1,5 @@
 
-function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels)      
+function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels)
     mat = vcat(Mat_Label, Mat_Unlabel)
     label = vcat(labels, unlabel_data_labels)
     df = DataFrame(x = mat[:,1], y = mat[:,2], class = label)
@@ -9,7 +9,7 @@ function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels)
 end
 
 
-function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels :: Array{Float64,2})      
+function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels :: Array{Float64,2})
     iter_size = size(unlabel_data_labels,2)
     num_size = size(unlabel_data_labels, 1) + size(labels,1)
     mat = vcat(Mat_Label, Mat_Unlabel)
@@ -18,7 +18,7 @@ function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels :: Arr
     label = vcat(labels, unlabel_data_labels)
     group = zeros(num_size * iter_size, 1)
     for i = 1:iter_size
-        group[((i-1)*num_size+1):num_size*i] = i 
+        group[((i-1)*num_size+1):num_size*i] = i
     end
     df = DataFrame(x = mat[:,1], y = mat[:,2], iteration = vec(group), class = label[:])
     println("Computing finished")
@@ -29,52 +29,52 @@ end
 
 function loadCircleData(num_data)
     center = [5.0, 5.0]
-    radiu_inner = 2  
-    radiu_outer = 4  
+    radiu_inner = 2
+    radiu_outer = 4
     num_inner = floor(num_data / 3)
-    num_outer = num_data - num_inner  
-      
+    num_outer = num_data - num_inner
+
     data = []
-    theta = 0.0  
+    theta = 0.0
     for i in 1:num_inner
-        pho = (theta % 360) * pi / 180  
-        tmp = zeros(1,2)  
-        tmp[1] = radiu_inner * cos(pho) + rand() + center[1]  
-        tmp[2] = radiu_inner * sin(pho) + rand() + center[2]  
-        push!(data,tmp)  
-        theta += 2  
+        pho = (theta % 360) * pi / 180
+        tmp = zeros(1,2)
+        tmp[1] = radiu_inner * cos(pho) + rand() + center[1]
+        tmp[2] = radiu_inner * sin(pho) + rand() + center[2]
+        push!(data,tmp)
+        theta += 2
     end
 
-    theta = 0.0 
+    theta = 0.0
     for i in 1:num_outer
-        pho = (theta % 360) * pi / 180  
+        pho = (theta % 360) * pi / 180
         tmp = zeros(1,2)
-        tmp[1] = radiu_outer * cos(pho) + rand() + center[1]  
-        tmp[2] = radiu_outer * sin(pho) + rand() + center[2]  
-        push!(data,tmp)  
-        theta += 1  
+        tmp[1] = radiu_outer * cos(pho) + rand() + center[1]
+        tmp[2] = radiu_outer * sin(pho) + rand() + center[2]
+        push!(data,tmp)
+        theta += 1
     end
-      
+
     Mat_Label = zeros(2, 2)
     Mat_Label[1,:] = center + [ 0.5 - radiu_inner , 0]
     Mat_Label[2,:] = center + [ 0.5 - radiu_outer , 0]
-    labels = [1, 2]  
-    Mat_Unlabel = reduce(vcat,data)  
-    return Mat_Label, labels, Mat_Unlabel  
+    labels = [1, 2]
+    Mat_Unlabel = reduce(vcat,data)
+    return Mat_Label, labels, Mat_Unlabel
 end
-  
+
 function loadBandData(num_unlabel_samples)
-    #Mat_Label = np.array([[5.0, 2.], [5.0, 8.0]])  
-    #labels = [0, 1]  
-    #Mat_Unlabel = np.array([[5.1, 2.], [5.0, 8.1]])  
-      
+    #Mat_Label = np.array([[5.0, 2.], [5.0, 8.0]])
+    #labels = [0, 1]
+    #Mat_Unlabel = np.array([[5.1, 2.], [5.0, 8.1]])
+
     Mat_Label = [5.0 2;5.0 8.0]
-    labels = [1, 2]  
-    num_dim = size(Mat_Label,2)  
+    labels = [1, 2]
+    num_dim = size(Mat_Label,2)
     Mat_Unlabel = zeros(num_unlabel_samples, num_dim)
-    Mat_Unlabel[num_unlabel_samples/2, :] = (rand(num_unlabel_samples/2, num_dim) - 0.5) * np.array([3, 1]) + Mat_Label[0]  
-    Mat_Unlabel[num_unlabel_samples/2 : num_unlabel_samples, :] = (np.random.rand(num_unlabel_samples/2, num_dim) - 0.5) * np.array([3, 1]) + Mat_Label[1]  
-    return Mat_Label, labels, Mat_Unlabel  
+    Mat_Unlabel[num_unlabel_samples/2, :] = (rand(num_unlabel_samples/2, num_dim) - 0.5) * np.array([3, 1]) + Mat_Label[0]
+    Mat_Unlabel[num_unlabel_samples/2 : num_unlabel_samples, :] = (np.random.rand(num_unlabel_samples/2, num_dim) - 0.5) * np.array([3, 1]) + Mat_Label[1]
+    return Mat_Label, labels, Mat_Unlabel
 end
 
 
@@ -185,7 +185,7 @@ function label_propagation(Mat_Label, Mat_Unlabel, labels; kernel_type = "rbf", 
 
 
 
-# if affinity_matrix is given 
+# if affinity_matrix is given
 function label_propagation(affinity_matrix, labels; kernel_type = "rbf", rbf_sigma = 1.5,
                     knn_num_neighbors = 10, max_iter = 500, tol = 1e-3)
     # initialize
@@ -239,8 +239,8 @@ function label_propagation(affinity_matrix, labels; kernel_type = "rbf", rbf_sig
 
 
 function test_label_propagation()
-  num_unlabel_samples = 800  
-  Mat_Label, labels, Mat_Unlabel = loadCircleData(num_unlabel_samples) 
+  num_unlabel_samples = 800
+  Mat_Label, labels, Mat_Unlabel = loadCircleData(num_unlabel_samples)
   iter = round(linspace(1,70,5))
   res = []
   for i in iter
@@ -248,7 +248,5 @@ function test_label_propagation()
       push!(res, unlabel_data_labels)
   end
   res = reduce(hcat, res)
-  show_example(Mat_Label, labels, Mat_Unlabel, res)  
+  show_example(Mat_Label, labels, Mat_Unlabel, res)
 end
-
-

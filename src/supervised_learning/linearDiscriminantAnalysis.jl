@@ -1,5 +1,5 @@
 
- 
+
 
 mutable struct LDA
     n_components::Integer
@@ -32,7 +32,7 @@ function calc_Sw_Sb(model::LDA, X::Matrix, y::Vector)
         mean_ = (mean(X_,1) - total_mean)
         Sb += size(X_, 1) * mean_' * mean_
     end
-    return Sw, Sb 
+    return Sw, Sb
 
 
 end
@@ -44,7 +44,7 @@ function transform_(model::LDA, X::Matrix, y::Vector)
         S = diagm(S)
         Sw_inverse = V * pinv(S) * U'
         A = Sw_inverse * Sb
-    else 
+    else
         A = inv(Sw) * Sb
     end
 
@@ -95,17 +95,3 @@ function test_LDA_reduction()
     model = LDA()
     plot_in_2d(model, X_train, y_train)
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -31,11 +31,11 @@ function train!(model::PCA, X::Matrix)
     model.components = V[:, 1:model.n_components]
 end
 
-function transform(model::PCA, 
+function transform(model::PCA,
                  x::Matrix)
     n = size(x,1)
     res = zeros(n, model.n_components)
-    for i = 1:n 
+    for i = 1:n
         res[i, :] = transform(model, x[i,:])
     end
     return res
@@ -65,16 +65,3 @@ function test_PCA()
     train!(model,X_train)
     plot_in_2d(model, X_train, y_train, "PCA")
 end
-
-
-
-
-
-
-
-
-
-
-
-
-

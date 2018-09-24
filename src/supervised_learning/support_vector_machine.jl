@@ -1,11 +1,11 @@
 
-const Arr = Union{Vector, Matrix} 
+const Arr = Union{Vector, Matrix}
 
 mutable struct SVM
     X::Matrix
     y::Vector
-    C::Float64 
-    tol::Float64 
+    C::Float64
+    tol::Float64
     max_iter::Integer
     kernel::String
     degree::Integer
@@ -39,7 +39,7 @@ function predict(model::SVM,
     res = zeros(n)
     if n == 1
         res[1] = predict_row(x,model)
-    else 
+    else
         for i = 1:n
             res[i] = predict_row(x[i,:],model)
         end
@@ -82,9 +82,9 @@ function train!(model::SVM)
             model.alpha[i] = model.alpha[i] + model.y[i] * model.y[j] * (alpha_jo - model.alpha[j])
 
             # Find intercept
-            b1 = model.b - e_i - model.y[i] * (model.alpha[i] - alpha_jo) * model.K[i, i] - 
+            b1 = model.b - e_i - model.y[i] * (model.alpha[i] - alpha_jo) * model.K[i, i] -
                  model.y[j] * (model.alpha[j] - alpha_jo) * model.K[i, j]
-            b2 = model.b - e_j - model.y[j] * (model.alpha[j] - alpha_jo) * model.K[j, j] - 
+            b2 = model.b - e_j - model.y[j] * (model.alpha[j] - alpha_jo) * model.K[j, j] -
                  model.y[i] * (model.alpha[i] - alpha_io) * model.K[i, j]
             if 0 < model.alpha[i] < model.C
                 model.b = b1
@@ -134,7 +134,7 @@ function count_bounds(i,j,model)
         L = max(0, model.alpha[i] + model.alpha[j] - model.C)
         H = min(model.C, model.alpha[i] + model.alpha[j])
     end
-    return L, H       
+    return L, H
 end
 
 function predict_row(x,model)
@@ -156,16 +156,10 @@ function test_svm()
         train!(model)
         predictions = predict(model,X_test)
         println("Classification accuracy $(kernel): $(accuracy(y_test, predictions))")
-        
+
     end
     #PCA
     pca_model = PCA()
     train!(pca_model, X_test)
     plot_in_2d(pca_model, X_test, predictions, "svm")
 end
-
-
-
-
-
-

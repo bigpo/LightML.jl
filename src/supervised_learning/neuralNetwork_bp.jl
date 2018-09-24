@@ -39,7 +39,7 @@ function train!(model::NeuralNetwork, X::Matrix, y::Vector)
         #end
         delta[depth] = error_ .* sigmoid_prime(z[depth])
         for j = depth-1:-1:2
-            delta[j] = vec(delta[j+1]' * model.weights[j]') .* sigmoid_prime(z[j])  
+            delta[j] = vec(delta[j+1]' * model.weights[j]') .* sigmoid_prime(z[j])
         end
         for j = 1:depth-1
             del = delta[j+1]
@@ -59,12 +59,12 @@ function init_weights(model::NeuralNetwork)
     model.weights[depth_-1] = 2*rand(model.hidden[depth_-1]+1,model.hidden[depth_])-1
 end
 
-function predict(model::NeuralNetwork, 
+function predict(model::NeuralNetwork,
                  x::Matrix)
     n = size(x,1)
     m = model.hidden[end]
     res = zeros(n,m)
-    for i = 1:n 
+    for i = 1:n
         res[i,:] = predict(model, x[i,:])
     end
     return res
@@ -93,16 +93,3 @@ function test_NeuralNetwork()
     predictions = predict(model,X_train)
     print("regression msea", mean_squared_error(y_train, predictions))
 end
-
-
-
-
-
-
-
-
-
-
-
-
-

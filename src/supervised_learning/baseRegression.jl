@@ -1,5 +1,5 @@
 
-abstract type BaseRegression 
+abstract type BaseRegression
 
 
 end

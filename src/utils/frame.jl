@@ -1,6 +1,6 @@
 
 mutable struct ModelName
-    
+
 end
 
 function ModelName()
@@ -12,11 +12,11 @@ function train!(model::ModelName, X::Matrix, y::Vector)
 
 end
 
-function predict(model::ModelName, 
+function predict(model::ModelName,
                  x::Matrix)
     n = size(x,1)
     res = zeros(n)
-    for i = 1:n 
+    for i = 1:n
         res[i] = predict(model, x[i,:])
     end
     return res
@@ -35,16 +35,3 @@ function test_ModelName()
     predictions = predict(model,X_test)
     print("classification accuracy", accuracy(y_test, predictions))
 end
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -12,7 +12,7 @@ mutable struct GaussianMixture
     likelihood::Vector
 end
 
-function GaussianMixture(; 
+function GaussianMixture(;
                          K::Integer = 4,
                          max_iters::Integer = 500,
                          tolerance::Float64 = 1e-3,
@@ -64,7 +64,7 @@ function E_step!(model, X)
         weighted_likelihood[i,:] = weighted_likelihood[i,:] / sum(weighted_likelihood[i,:])
     end
     model.responsibilities = weighted_likelihood
-end 
+end
 
 
 function M_step!(model, X)
@@ -94,11 +94,11 @@ function isconverge_(model::GaussianMixture)
     end
     return false
 end
-function predict(model::GaussianMixture, 
+function predict(model::GaussianMixture,
                  x::Matrix)
     n = size(x,1)
     res = zeros(n)
-    for i = 1:n 
+    for i = 1:n
         res[i] = predict(model, x[i,:])
     end
     return res
@@ -126,16 +126,3 @@ function test_GaussianMixture()
     train!(model,X_train)
     predictions = predict(model,X_train)
 end
-
-
-
-
-
-
-
-
-
-
-
-
-

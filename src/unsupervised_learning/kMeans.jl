@@ -1,4 +1,3 @@
-
 #Partition a dataset into K clusters.
 
 #Finds clusters by repeatedly assigning each data point to the cluster with
@@ -49,7 +48,7 @@ end
 
 
 function train!(model::Kmeans, X::Matrix)
-    model.X = X 
+    model.X = X
 end
 
 function predict!(model::Kmeans)
@@ -60,7 +59,7 @@ function predict!(model::Kmeans)
         assign_clusters!(model)
         update_centroid!(model)
         if is_converged(centroid_old, model.centroid)
-            break 
+            break
         end
     end
 end
@@ -85,7 +84,7 @@ function assign_clusters!(model::Kmeans)
     n = size(model.X,1)
     model.clusters = Dict{Integer,Matrix}()
     model.clu_ind = Dict{Integer,Vector}()
-    for i = 1:n 
+    for i = 1:n
         dist = zeros(model.k)
         for j = 1:length(dist)
             dist[j] = norm(model.centroid[j,:]-model.X[i,:])
@@ -137,7 +136,7 @@ end
 
 function is_converged(x::Matrix,
                       y::Matrix)
-    return norm(x-y) == 0 
+    return norm(x-y) == 0
 end
 
 
@@ -211,13 +210,3 @@ function test_kmeans_random()
     predict!(model)
     plot_in_2d(model)
 end
-
-
-
-
-
-
-
-
-
-

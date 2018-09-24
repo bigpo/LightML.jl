@@ -27,7 +27,7 @@ function train!(model::Adaboost, X::Matrix, y::Vector)
                 err = 0
                 threshold_ = X[threshold_ind, feature_ind]
 
-                for sample_ind = 1:n_sample 
+                for sample_ind = 1:n_sample
                     pred = 1
                     x = X[sample_ind, feature_ind]
                     if x < threshold_
@@ -42,7 +42,7 @@ function train!(model::Adaboost, X::Matrix, y::Vector)
                 end
 
                 if err < err_max
-                    err_max = err 
+                    err_max = err
                     threshold = threshold_
                     polarity = polarity_
                     feature_index = feature_ind
@@ -52,7 +52,7 @@ function train!(model::Adaboost, X::Matrix, y::Vector)
 
         alpha = 1/2 * log((1.000001-err_max)/(err_max+0.000001))
 
-        for j = 1:n_sample 
+        for j = 1:n_sample
             pred = 1
             x = X[j, feature_index]
             if polarity * x < polarity * threshold
@@ -64,11 +64,11 @@ function train!(model::Adaboost, X::Matrix, y::Vector)
     end
 end
 
-function predict(model::Adaboost, 
+function predict(model::Adaboost,
                  x::Matrix)
     n = size(x,1)
     res = zeros(n)
-    for i = 1:n 
+    for i = 1:n
         res[i] = predict(model, x[i,:])
     end
     return res
@@ -82,7 +82,7 @@ function predict(model::Adaboost,
         feature_index = trunc(Int64,model.clf[1,i])
         threshold = model.clf[2,i]
         polarity = model.clf[3,i]
-        alpha = model.clf[4,i]     
+        alpha = model.clf[4,i]
         x_temp = x[feature_index]
         if polarity * x_temp < polarity * threshold
             pred = -1
@@ -113,12 +113,3 @@ function test_Adaboost()
     plot_in_2d(pca_model, X_test, predictions, "Adaboost")
 
 end
-
-
-
-
-
-
-
-
-

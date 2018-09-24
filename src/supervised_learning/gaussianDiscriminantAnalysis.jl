@@ -1,6 +1,6 @@
 
 
-mutable struct GDA 
+mutable struct GDA
     n_class::Integer
     class_mean::Matrix
     class_cov::Matrix
@@ -16,7 +16,7 @@ function GDA(;
             class_ = zeros(2))
     return GDA(n_class, class_mean, class_cov, class_priors,class_)
 end
-    
+
 
 
 function train!(model::GDA, X::Matrix, y::Vector)
@@ -76,10 +76,3 @@ function test_GDA()
     predictions = predict(model,X_test)
     print("classification accuracy", accuracy(y_test, predictions))
 end
-
-
-
-
-
-
-

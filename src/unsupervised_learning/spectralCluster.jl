@@ -8,7 +8,7 @@ function spec_clustering(data,k)
     l = d-w
     temp = eig(l)
     temp = temp[2]
-    e_map = temp[:,1:(k-1)] #seems that the largest k eigenvalue works? 
+    e_map = temp[:,1:(k-1)] #seems that the largest k eigenvalue works?
     #e_map = temp[:,(end-k+1):end]
     model = Kmeans(k=k)
     train!(model,e_map)
@@ -33,7 +33,7 @@ function count_sim(x::Vector,y::Vector;
                     gamma = 1)
     if types == "Gaussian"
         return exp(-gamma*norm(x-y)^2)
-    end        
+    end
 end
 
 function test_spec_cluster()
