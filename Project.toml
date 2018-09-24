@@ -15,6 +15,7 @@ Gadfly = "c91e804a-d5a3-530f-b6f0-dfbca275c004"
 Hexagons = "a1b4810d-1bce-5fbd-ac56-80944d57a21f"
 PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
