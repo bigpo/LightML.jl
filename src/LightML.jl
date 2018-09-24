@@ -11,6 +11,7 @@ using Distances
 using Clustering
 import Printf
 import DelimitedFiles
+import LinearAlgebra
 
 @pyimport sklearn.datasets as dat
 

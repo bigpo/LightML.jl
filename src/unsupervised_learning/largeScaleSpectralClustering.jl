@@ -51,7 +51,9 @@ function compose_sparse_Z_hat_matrix(X, landmarks, bandwidth, r)
         topLandMarksCoefficients = topLandMarksCoefficients / sum(topLandMarksCoefficients);
         ZHat[topLandMarksIndices,i] = topLandMarksCoefficients;
     end
-    return diagm(sum(ZHat,2)[:])^(-1/2) * ZHat;
+    #    return diagm(sum(ZHat,2)[:])^(-1/2) * ZHat;
+#    @show size(ZHat)
+    return LinearAlgebra.diagm(sum(ZHat,dims=2)[:])^(-1/2) * ZHat;
 
 end
 
