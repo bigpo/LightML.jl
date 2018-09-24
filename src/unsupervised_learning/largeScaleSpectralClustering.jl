@@ -1,5 +1,5 @@
 
-type LSC
+mutable struct LSC
     n_clusters::Int64
     n_landmarks::Int64
     method::Symbol

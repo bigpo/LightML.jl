@@ -1,8 +1,10 @@
 
 
-abstract GradientBoosting
+abstract type GradientBoosting 
 
-type GradientBoostingClassifier <: GradientBoosting
+end
+
+mutable struct GradientBoostingClassifier <: GradientBoosting
     n_clf::Int64
     learning_rate::Float64
     max_depth::Int64
@@ -12,7 +14,7 @@ type GradientBoostingClassifier <: GradientBoosting
     trees::Array{ClassificationTree}
 end
 
-type GradientBoostingRegressor <: GradientBoosting
+mutable struct GradientBoostingRegressor <: GradientBoosting
     n_clf::Int64
     learning_rate::Float64
     max_depth::Int64

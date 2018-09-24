@@ -1,6 +1,6 @@
 
 
-type GaussianMixture
+mutable struct GaussianMixture
     K::Integer
     max_iters::Integer
     method::String

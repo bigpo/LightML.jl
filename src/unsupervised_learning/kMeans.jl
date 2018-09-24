@@ -25,7 +25,7 @@
 #           rates and avoid degenerate cases.
 
 
-type Kmeans
+mutable struct Kmeans
     clusters::Dict{Integer,Matrix}
     clu_ind::Dict{Integer,Vector}
     k::Integer

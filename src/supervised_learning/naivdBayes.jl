@@ -1,6 +1,6 @@
 
 
-type NaiveBayes 
+mutable struct NaiveBayes 
     n_class::Integer
     class_mean::Matrix
     class_var::Matrix

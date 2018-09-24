@@ -1,6 +1,8 @@
-abstract LossFunction
+abstract type LossFunction 
 
-type LogisticLoss <: LossFunction
+end
+
+mutable struct LogisticLoss <: LossFunction
     obj::Function
     gradient::Function
     hessian::Function
@@ -30,7 +32,7 @@ type LogisticLoss <: LossFunction
 end
 
 
-type SquareLoss <: LossFunction
+mutable struct SquareLoss <: LossFunction
     obj::Function
     gradient::Function
     hessian::Function
@@ -54,7 +56,7 @@ type SquareLoss <: LossFunction
 end
 
 
-type DecisionNode
+mutable struct DecisionNode
     label::Union{Array, Int64, String, Float64}
     feature_index::Integer
     threshold::Features
@@ -73,9 +75,11 @@ function DecisionNode(;
     return DecisionNode(label, feature_index, threshold,true_branch, false_branch, y_num)
 end
 
-abstract DecisionTree
+abstract type DecisionTree 
 
-type RegressionTree <: DecisionTree
+end
+
+mutable struct RegressionTree <: DecisionTree
     root::Union{DecisionNode,String}
     max_depth::Integer 
     min_gain::Float64 
@@ -85,7 +89,7 @@ type RegressionTree <: DecisionTree
 end  
 
 
-type ClassificationTree <: DecisionTree
+mutable struct ClassificationTree <: DecisionTree
     root::Union{DecisionNode,String}
     max_depth::Integer 
     min_gain::Float64 
@@ -94,7 +98,7 @@ type ClassificationTree <: DecisionTree
     y_num::Integer
 end
 
-type XGBoostRegressionTree <: DecisionTree
+mutable struct XGBoostRegressionTree <: DecisionTree
     root::Union{DecisionNode,String}
     max_depth::Int64 
     min_gain::Float64 

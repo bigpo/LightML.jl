@@ -1,8 +1,11 @@
 
-abstract BaseRegression
+abstract type BaseRegression 
 
 
-type LinearRegression <: BaseRegression
+end
+
+
+mutable struct LinearRegression <: BaseRegression
     C::Float64
     reg::String
     lr::Float64
@@ -12,7 +15,7 @@ type LinearRegression <: BaseRegression
     errors::Vector
 end
 
-type LogisticRegression <: BaseRegression
+mutable struct LogisticRegression <: BaseRegression
     C::Float64
     reg::String
     lr::Float64
@@ -22,7 +25,7 @@ type LogisticRegression <: BaseRegression
     errors::Vector
 end
 
-type LeastAngleRegression <: BaseRegression
+mutable struct LeastAngleRegression <: BaseRegression
     normalize::Bool
     max_iters::Integer
     params::Vector

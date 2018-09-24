@@ -1,6 +1,6 @@
 
 
-type Hmm
+mutable struct Hmm
     e_to_i::Dict{String, Integer}
     i_to_e::Dict{Integer, String}
     s_to_i::Dict{String, Integer}

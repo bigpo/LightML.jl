@@ -1,5 +1,5 @@
 
-type Adaboost
+mutable struct Adaboost
     n_clf::Int64
     clf::Matrix
 end

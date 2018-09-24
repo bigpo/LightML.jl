@@ -1,7 +1,7 @@
 
  
 
-type LDA
+mutable struct LDA
     n_components::Integer
     method::String
     w::Vector

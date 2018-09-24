@@ -1,7 +1,7 @@
 
 const Arr = Union{Vector, Matrix} 
 
-type SVM
+mutable struct SVM
     X::Matrix
     y::Vector
     C::Float64 

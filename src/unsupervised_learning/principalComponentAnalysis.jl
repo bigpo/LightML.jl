@@ -1,7 +1,7 @@
 
 
 
-type PCA
+mutable struct PCA
     solver::String
     n_components::Integer
     components::Matrix

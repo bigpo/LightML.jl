@@ -1,6 +1,6 @@
 
 
-type XGBoost <: DecisionTree
+mutable struct XGBoost <: DecisionTree
     n_estimators::Int64
     learning_rate::Float64
     min_samples_split::Int64

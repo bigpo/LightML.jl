@@ -1,5 +1,5 @@
 
-type randomForest
+mutable struct randomForest
     min_split::Int64
     min_gain::Float64 
     max_depth::Integer

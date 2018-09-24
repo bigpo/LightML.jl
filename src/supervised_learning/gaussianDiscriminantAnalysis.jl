@@ -1,6 +1,6 @@
 
 
-type GDA 
+mutable struct GDA 
     n_class::Integer
     class_mean::Matrix
     class_cov::Matrix

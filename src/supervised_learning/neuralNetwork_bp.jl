@@ -1,6 +1,6 @@
 
 
-type NeuralNetwork
+mutable struct NeuralNetwork
     hidden::Union{Vector,Int64}
     act::String
     weights::Dict{Integer, Matrix}

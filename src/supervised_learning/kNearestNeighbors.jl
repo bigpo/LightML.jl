@@ -1,14 +1,18 @@
 
 import StatsBase: countmap
 
-abstract Dist
+abstract type Dist 
 
-type Euclidean <: Dist
 end
 
-abstract KNN 
+mutable struct Euclidean <: Dist
+end
 
-type KnnClassifier <: KNN
+abstract type KNN  
+
+end 
+
+mutable struct KnnClassifier <: KNN
     k::Integer
     dis_func::Dist 
     X::Matrix
@@ -16,7 +20,7 @@ type KnnClassifier <: KNN
 end
 
 
-type KnnRegression <: KNN
+mutable struct KnnRegression <: KNN
     k::Integer
     dis_func::Dist 
     X::Matrix

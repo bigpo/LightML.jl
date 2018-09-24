@@ -1,5 +1,5 @@
 
-type ModelName
+mutable struct ModelName
     
 end
 
