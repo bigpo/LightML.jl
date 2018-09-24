@@ -1,4 +1,3 @@
-__precompile__()
 module LightML
 
 using Gadfly
@@ -11,16 +10,11 @@ using DataStructures
 using Distances
 using Clustering
 
-
-
 @pyimport sklearn.datasets as dat
 
-
-
-export 
-
-    test_LinearRegression, 
-    test_LogisticRegression, 
+export
+    test_LinearRegression,
+    test_LogisticRegression,
 
     test_ClassificationTree,
     test_RegressionTree,
@@ -88,14 +82,9 @@ export
     transform,
     spec_clustering
 
-
-
-
 Features = Union{String, Real}
 
-
-
-#Supervised_learning 
+# Supervised_learning
 
 include("supervised_learning/baseRegression.jl")
 include("supervised_learning/decisionTree.jl")
@@ -113,7 +102,7 @@ include("supervised_learning/xgboost.jl")
 include("supervised_learning/GradientBoostingTree.jl")
 
 
-#Unsupervised_learning 
+# Unsupervised_learning
 
 include("unsupervised_learning/gaussianMixtureModel.jl")
 include("unsupervised_learning/kMeans.jl")
@@ -121,13 +110,9 @@ include("unsupervised_learning/principalComponentAnalysis.jl")
 include("unsupervised_learning/spectralCluster.jl")
 include("unsupervised_learning/largeScaleSpectralClustering.jl")
 
-#Utils
+# Utils
 
 include("utils/utils.jl")
 include("utils/demo.jl")
 
-
-
-
-
-end
+end # module LightML
