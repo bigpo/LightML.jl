@@ -1,4 +1,4 @@
-abstract type LossFunction 
+abstract type LossFunction
 
 end
 
@@ -38,7 +38,7 @@ mutable struct SquareLoss <: LossFunction
     hessian::Function
 
     function obj(y::Array, y_pred::Array)
-        return 0.5 * sumabs2(y - y_pred) 
+        return 0.5 * sumabs2(y - y_pred)
     end
     function gradient(y::Array, y_pred::Array)
         return (y_pred - y)
@@ -75,24 +75,24 @@ function DecisionNode(;
     return DecisionNode(label, feature_index, threshold,true_branch, false_branch, y_num)
 end
 
-abstract type DecisionTree 
+abstract type DecisionTree
 
 end
 
 mutable struct RegressionTree <: DecisionTree
     root::Union{DecisionNode,String}
-    max_depth::Integer 
-    min_gain::Float64 
+    max_depth::Integer
+    min_gain::Float64
     min_samples_split::Integer
     current_depth::Integer
     y_num::Integer
-end  
+end
 
 
 mutable struct ClassificationTree <: DecisionTree
     root::Union{DecisionNode,String}
-    max_depth::Integer 
-    min_gain::Float64 
+    max_depth::Integer
+    min_gain::Float64
     min_samples_split::Integer
     current_depth::Integer
     y_num::Integer
@@ -100,8 +100,8 @@ end
 
 mutable struct XGBoostRegressionTree <: DecisionTree
     root::Union{DecisionNode,String}
-    max_depth::Int64 
-    min_gain::Float64 
+    max_depth::Int64
+    min_gain::Float64
     min_samples_split::Int64
     current_depth::Int64
     loss::LogisticLoss
@@ -204,7 +204,7 @@ function build_tree(model::DecisionTree, X::Matrix, y::Array)
         false_branch = build_tree(model, rightX, rightY)
         model.current_depth += 1
         return DecisionNode(feature_index = best_criteria["feature_i"],
-         threshold = best_criteria["threshold"], true_branch = true_branch, 
+         threshold = best_criteria["threshold"], true_branch = true_branch,
          false_branch = false_branch)
     end
 
@@ -235,7 +235,7 @@ function leaf_value_calc(model::ClassificationTree, y::Array)
     feature = unique(y)
     most_common = nothing
     count_max = 0
-    for i in feature 
+    for i in feature
         count = sum(y .== i)
         if count > count_max
             count_max = count
@@ -293,12 +293,12 @@ function impurity_calc(model::ClassificationTree, y, y1, y2)
 end
 
 
-function predict(model::DecisionTree, 
+function predict(model::DecisionTree,
                  x::Matrix)
     n = size(x,1)
     res = zeros(n)
     if model.y_num == 1
-        for i = 1:n 
+        for i = 1:n
             res[i] = predict(model.root, x[i,:])
         end
     else
@@ -316,14 +316,14 @@ function predict(model::DecisionNode,
     if model.label != "nothing"
         return model.label
     end
-    feature_current = x[model.feature_index] 
+    feature_current = x[model.feature_index]
     if typeof(feature_current) <:String
         if feature_current == model.threshold
             return predict(model.true_branch, x)
         else
             return predict(model.false_branch, x)
         end
-    elseif typeof(feature_current) <: Real 
+    elseif typeof(feature_current) <: Real
         if feature_current <= model.threshold
             return predict(model.true_branch, x)
         else
@@ -334,9 +334,9 @@ end
 
 function print_tree(model::DecisionTree)
     if model.lable != "nothing"
-        println($(model.label))
+#        println($(model.label)) GJL temporarily disable
     else
-        println("$(model.feature_index):$(model.threshold)?")
+#        println("$(model.feature_index):$(model.threshold)?") GJL temporarily disable
         println(" T->")
         print_tree(model.true_branch)
         println(" F->")
@@ -388,19 +388,3 @@ function test_RegressionTree()
     PyPlot.scatter(X_test, predictions, color = "green")
     legend(loc="upper right",fancybox="true")
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
