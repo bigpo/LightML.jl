@@ -1,6 +1,6 @@
 
 
-mutable struct NaiveBayes 
+mutable struct NaiveBayes
     n_class::Integer
     class_mean::Matrix
     class_var::Matrix
@@ -16,7 +16,7 @@ function NaiveBayes(;
                     class_ = zeros(2))
     return NaiveBayes(n_class, class_mean, class_var, class_priors,class_)
 end
-    
+
 
 
 function train!(model::NaiveBayes, X::Matrix, y::Vector)
@@ -53,7 +53,7 @@ function predict(model::NaiveBayes,
     for i = 1:model.n_class
         prior = log(model.class_priors[i])
         cond = sum(log_pdf(model, X, i))
-        temp[i] = prior + cond 
+        temp[i] = prior + cond
     end
     res = softmax(temp)
     class = model.class_[res]
@@ -87,10 +87,3 @@ function test_naive()
     train!(pca_model, X_test)
     plot_in_2d(pca_model, X_test, predictions, "Naive Bayes")
 end
-
-
-
-
-
-
-
