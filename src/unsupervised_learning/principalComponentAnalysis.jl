@@ -20,7 +20,7 @@ end
 function train!(model::PCA, X::Matrix)
     model.mean_ = vec(StatsBase.mean(X,dims=(1)))
     n_sample = size(X, 1)
-    X_de_mean = X - repmat(model.mean_', n_sample, 1)
+    X_de_mean = X - repeat(model.mean_', n_sample, 1)
 
     if model.solver == "svd"
         U,S,V = svd(X_de_mean)
