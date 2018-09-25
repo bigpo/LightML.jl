@@ -23,10 +23,11 @@ function train!(model::PCA, X::Matrix)
     X_de_mean = X - repeat(model.mean_', n_sample, 1)
 
     if model.solver == "svd"
-        U,S,V = svd(X_de_mean)
+        thesvd = LinearAlgebra.svd(X_de_mean)
+        U,S,V = (thesvd.U, thesvd.S, thesvd.V)
     elseif model.solver == "eig"
-        cov_ = cov(X_de_mean)
-        D,V = eigs(cov_, nev = model.n_components)
+        cov_ = StatsBase.cov(X_de_mean)
+        D,V = LinearAlgebra.eigs(cov_, nev = model.n_components)
     end
     model.components = V[:, 1:model.n_components]
 end
