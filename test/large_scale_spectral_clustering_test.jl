@@ -1,9 +1,8 @@
 import DelimitedFiles
 
 @testset "Read data" begin
-    path_ = "../resources/data"
     data_name = ["smiley", "spirals", "shapes", "cassini1"]
-    datasets = joinpath.(@__DIR__, path_, string.(data_name, ".csv"))
+    datasets = joinpath.(LightML.data_dir, string.(data_name, ".csv"))
     for i in 1:4
         data = DelimitedFiles.readdlm(datasets[i])
         if i == 1
