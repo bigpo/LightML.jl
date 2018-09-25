@@ -15,7 +15,7 @@ end
 function softmax(x::Vector)
     x = exp(x)
     pos = x./sum(x)
-    return indmax(pos)
+    return argmax(pos)
 end
 
 function softmax(X::Matrix)
@@ -113,7 +113,7 @@ function unhot(predicted)
     actual = zeros(size(predicted,1))
     for i = 1:size(predicted, 1)
         predicted_data = predicted[i,:]
-        actual[i] = indmax(predicted_data)
+        actual[i] = argmax(predicted_data)
     end
     return actual
 end
@@ -195,11 +195,11 @@ end
 
 
 function sigmoid(x)
-    return 1 / (1+exp(-x))
+    return 1 ./ (1 .+ exp.(-x))
 end
 
 function sigmoid_prime(x)
-    return sigmoid(x).*(1-sigmoid(x))
+    return sigmoid(x) .* (1-sigmoid(x))
 end
 
 
