@@ -1,9 +1,4 @@
-
-abstract type BaseRegression
-
-
-end
-
+abstract type BaseRegression end
 
 mutable struct LinearRegression <: BaseRegression
     C::Float64
@@ -32,7 +27,6 @@ mutable struct LeastAngleRegression <: BaseRegression
     errors::Vector
 end
 
-
 function LinearRegression(;
                           C=0.01,
                           tolerance=0.1,
@@ -49,7 +43,6 @@ function LinearRegression(;
     end
     return LinearRegression(C,reg,lr,tolerance,max_iters,params,errors)
 end
-
 
 function LogisticRegression(;
                           C=0.01,
@@ -68,7 +61,6 @@ function LogisticRegression(;
     return LogisticRegression(C,reg,lr,tolerance,max_iters,params,errors)
 end
 
-
 function LeastAngleRegression(;
     normalize=false,
     max_iters=1000,
@@ -82,7 +74,6 @@ function LeastAngleRegression(;
     end
     return LeastAngleRegression(normalize,max_iters,params,errors)
 end
-
 
 function train!(model1::LinearRegression,
                 X::Matrix,
@@ -239,13 +230,10 @@ function train!(model1::LeastAngleRegression,
 
         # print(coefs, '\n')
     end
-
     model.params = vec(coefs)
 end
 
-
-function predict(model::LogisticRegression,
-                 x)
+function predict(model::LogisticRegression, x)
     n = size(x,1)
     b = ones(n)
     res = sigmoid(hcat(x,b)*model.params)
@@ -267,12 +255,9 @@ function predict(model::LinearRegression,
     return hcat(x,b)*model.params
 end
 
-function predict(model::LeastAngleRegression,
-                 x)
+function predict(model::LeastAngleRegression, x)
     return x*model.params
 end
-
-
 
 function cost_linear(w::Vector)
     return add_reg(mean_squared_error(y_global, X_global*w),w)
@@ -290,7 +275,6 @@ function add_reg(loss,w,model)
     end
     return loss
 end
-
 
 function test_LinearRegression(;reg = "l1")
 
@@ -319,6 +303,7 @@ function test_LogisticRegression(; reg = "l2")
     pca_model = PCA()
     train!(pca_model, X_test)
     plot_in_2d(pca_model, X_test, predictions, "LogisticRegression")
+    return nothing
 end
 
 function test_LeastAngleRegression()
@@ -340,4 +325,5 @@ function test_LeastAngleRegression()
     predictions = predict(model,X_test)
 
     print("regression mse: ", mean_squared_error(y_test, predictions))
+    return nothing
 end
