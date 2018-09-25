@@ -1,6 +1,5 @@
 # LightML.jl
 
-
 [![Build Status](https://travis-ci.org/memoiry/LightML.jl.svg?branch=master)](https://travis-ci.org/memoiry/LightML.jl)
 [![Build status](https://ci.appveyor.com/api/projects/status/9iuvdt0j0mw6au0k?svg=true)](https://ci.appveyor.com/project/memoiry/lightml-jl)
 [![Coverage Status](https://coveralls.io/repos/github/memoiry/LightML.jl/badge.svg?branch=master)](https://coveralls.io/github/memoiry/LightML.jl?branch=master)
@@ -10,6 +9,12 @@
 LightML.jl is a collection of reimplementation of general machine learning algorithm in Julia. 
 
 The purpose of this project is purely self-educational.
+
+### Fork
+
+This repository is a fork of [LightML.jl](https://github.com/memoiry/LightML.jl). The default branch in this fork is
+`master-gjl`. This branch partially supports Julia v1.0: the package can be installed and many examples work.
+The branch `master` is synced with `master` at [https://github.com/memoiry/LightML.jl](https://github.com/memoiry/LightML.jl).
 
 ### Why?
 
