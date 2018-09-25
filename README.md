@@ -23,8 +23,8 @@ You should access test function of every implementation for its usage in detail.
 
 ### Installation
 
-September 25, 2018. You need to install `Compose` and `Gadfly` for Julia v1.0.
-See [this issue](https://github.com/GiovineItalia/Gadfly.jl/issues/1185)
+September 25, 2018. You need to install development versions `Compose` and `Gadfly` for Julia v1.0.
+See [this issue](https://github.com/GiovineItalia/Gadfly.jl/issues/1185).
 ```julia
 julia> pkg"add Compose#master"
 julia> pkg"add Gadfly#master"
