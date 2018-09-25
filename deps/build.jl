@@ -1,3 +1,4 @@
+import Pkg
 ENV["PYTHON"]=""
 Pkg.add("Conda")
 using Conda
