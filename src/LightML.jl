@@ -12,6 +12,7 @@ using Clustering
 import Printf
 import DelimitedFiles
 import LinearAlgebra
+import StatsBase
 
 const dat = PyNULL()
 

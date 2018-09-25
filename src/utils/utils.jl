@@ -28,7 +28,7 @@ end
 
 function calc_variance(X)
     n_sample = size(X,1)
-    mean_ = repmat(mean(X, 1),n_sample,1)
+    mean_ = repmat(StatsBase.mean(X, 1),n_sample,1)
     de_mean = X - mean_
     return 1/n_sample * diag(de_mean' * de_mean)
 end
@@ -118,8 +118,8 @@ function unhot(predicted)
 end
 
 function normalize_(X::Matrix)
-    std_ = std(X, 1)
-    mean_ = mean(X, 1)
+    std_ = StatsBase.std(X, 1)
+    mean_ = StatsBase.mean(X, 1)
     for i = 1:size(X,2)
         if std_[i] != 0
             X[:,i] = (X[:, i] - mean_[i])/std_[i]
@@ -144,7 +144,7 @@ function accuracy(actual, predicted)
 end
 
 function mean_absolute_error(actual, predicted)
-    return mean(absolute_error(actual, predicted))
+    return StatsBase.mean(absolute_error(actual, predicted))
 end
 
 function squared_error(actual, predicted)
@@ -156,11 +156,11 @@ function squared_log_error(actual, predicted)
 end
 
 function mean_squared_log_error(actual, predicted)
-    return mean(squared_log_error(actual, predicted))
+    return StatsBase.mean(squared_log_error(actual, predicted))
 end
 
 function mean_squared_error(actual, predicted)
-    return mean(squared_error(actual, predicted))
+    return StatsBase.mean(squared_error(actual, predicted))
 end
 
 function root_mean_squared_error(actual, predicted)
@@ -178,12 +178,12 @@ function logloss(actual, predicted)
 end
 
 function hinge(actual, predicted)
-    return mean(max(1. - actual .* predicted, 0.))
+    return StatsBase.mean(max(1. - actual .* predicted, 0.))
 end
 
 function binary_crossentropy(actual, predicted)
     predicted = clamp(predicted, 1e-15, 1 - 1e-15)
-    return mean(-sum(actual .* log(predicted) -
+    return StatsBase.mean(-sum(actual .* log(predicted) -
                            (1 - actual) .* log(1 - predicted)))
 end
 
