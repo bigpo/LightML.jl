@@ -29,7 +29,7 @@ end
 
 function calc_variance(X)
     n_sample = size(X,1)
-    mean_ = repmat(StatsBase.mean(X, 1),n_sample,1)
+    mean_ = repeat(StatsBase.mean(X, 1),n_sample,1)
     de_mean = X - mean_
     return 1/n_sample * diag(de_mean' * de_mean)
 end

@@ -13,8 +13,8 @@ function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels :: Arr
     iter_size = size(unlabel_data_labels,2)
     num_size = size(unlabel_data_labels, 1) + size(labels,1)
     mat = vcat(Mat_Label, Mat_Unlabel)
-    mat = repmat(mat,iter_size,1)
-    labels = repmat(labels,1, iter_size)
+    mat = repeat(mat,iter_size,1)
+    labels = repeat(labels,1, iter_size)
     label = vcat(labels, unlabel_data_labels)
     group = zeros(num_size * iter_size, 1)
     for i = 1:iter_size
@@ -81,7 +81,7 @@ end
 function navie_knn(dataSet, query, k)
     numSamples = size(dataSet,1)
     ## step 1: calculate Euclidean distance
-    diff = repmat(query,1,numSamples)' - dataSet
+    diff = repeat(query,1,numSamples)' - dataSet
     squaredDiff = diff.^2
     squaredDist = vec(sum(squaredDiff, 2))
 

@@ -57,7 +57,7 @@ function E_step!(model, X)
         likeli = pdf(dis, X')
         likelihood[:, i] = likeli
     end
-    weighted_likelihood = repmat(model.weights',size(X,1),1) .* likelihood
+    weighted_likelihood = repeat(model.weights',size(X,1),1) .* likelihood
     temp1 = sum(log(sum(weighted_likelihood,2)))
     push!(model.likelihood, temp1)
     for i = 1:size(weighted_likelihood, 1)

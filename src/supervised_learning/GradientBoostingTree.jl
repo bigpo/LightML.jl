@@ -66,9 +66,9 @@ function train!(model::GradientBoosting, X::Matrix, y::Vector)
         y = one_hot(y)
     end
     n_sample, n_feature = size(X)
-    y_pred = mean(y, 1)
+    y_pred = StatsBase.mean(y, dims=(1))
     if typeof(model) <: GradientBoostingClassifier
-        y_pred = repmat(y_pred,n_sample,1)
+        y_pred = repeat(y_pred,n_sample,1)
     else
         y_pred = y_pred * ones(n_sample)
     end
