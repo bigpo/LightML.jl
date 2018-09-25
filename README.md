@@ -23,7 +23,15 @@ You should access test function of every implementation for its usage in detail.
 
 ### Installation
 
-First make sure you have correct `python` dependency. You can use the Conda Julia package to install more Python packages, and import Conda to print the Conda.PYTHONDIR directory where python was installed. On GNU/Linux systems, PyCall will default to using the python program (if any) in your PATH.
+September 25, 2018. You need to install `Compose` and `Gadfly` for Julia v1.0.
+See [this issue](https://github.com/GiovineItalia/Gadfly.jl/issues/1185)
+```julia
+julia> pkg"add Compose#master"
+julia> pkg"add Gadfly#master"
+julia> pkg"add Hexagons"
+```
+
+Make sure you have correct `python` dependency. You can use the Conda Julia package to install more Python packages, and import Conda to print the Conda.PYTHONDIR directory where python was installed. On GNU/Linux systems, PyCall will default to using the python program (if any) in your PATH.
 
 The advantage of a Conda-based configuration is particularly compelling if you are installing PyCall in order to use packages like PyPlot.jl or SymPy.jl, as these can then automatically install their Python dependencies. 
 
@@ -45,7 +53,6 @@ Pkg.build("LightML")
 ```
 
 It's actually same with the procedure above.
-
 
 Then every dependency should be configured, you can simply run command below to install the package.
 
