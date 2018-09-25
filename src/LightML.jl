@@ -13,6 +13,7 @@ import Printf
 import DelimitedFiles
 import LinearAlgebra
 import StatsBase
+import Random
 
 const dat = PyNULL()
 

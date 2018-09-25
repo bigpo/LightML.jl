@@ -54,8 +54,8 @@ end
 
 
 function train_test_split(X,y;train_size=0.75,rand_seed=2135)
-    srand(rand_seed)
-    rand_indx = shuffle(1:size(X,1))
+    Random.seed!(rand_seed)
+    rand_indx = Random.shuffle(1:size(X,1))
     train_num = Int(floor(size(X,1) * train_size))
     X_train = X[rand_indx[1:train_num],:]
     X_test = X[rand_indx[(train_num+1):end],:]
