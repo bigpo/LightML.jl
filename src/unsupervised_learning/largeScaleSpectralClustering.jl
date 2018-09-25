@@ -64,7 +64,7 @@ function train!(model::LSC, X::Matrix)
     Z_hat = compose_sparse_Z_hat_matrix(X, landmarks, model.bandwidth,
                                         model.non_zero_landmarks)
     svd_result = LinearAlgebra.svd(transpose(Z_hat))
-    temp = transpose(svd_result.U[:,1:model.n_clusters])
+    temp = copy(transpose(svd_result.U[:,1:model.n_clusters]))
     model.cluster_result = kmeans(temp, model.n_clusters).assignments
 end
 
