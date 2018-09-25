@@ -118,8 +118,8 @@ function unhot(predicted)
 end
 
 function normalize_(X::Matrix)
-    std_ = StatsBase.std(X, 1)
-    mean_ = StatsBase.mean(X, 1)
+    std_ = StatsBase.std(X, dims=(1))
+    mean_ = StatsBase.mean(X, dims=(1))
     for i = 1:size(X,2)
         if std_[i] != 0
             X[:,i] = (X[:, i] - mean_[i])/std_[i]

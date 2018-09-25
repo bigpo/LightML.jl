@@ -13,8 +13,8 @@ function demo()
     idx = vcat(findall(!iszero, data["target"] .== digit1), findall(!iszero, data["target"] .== digit2))
     y = data["target"][idx]
     # Change labels to {0, 1}
-    y[y .== digit1] = -1
-    y[y .== digit2] = 1
+    y[y .== digit1] .= -1
+    y[y .== digit2] .= 1
 
 
     X = data["data"][idx,:]
