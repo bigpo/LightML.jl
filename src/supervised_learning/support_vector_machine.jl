@@ -120,7 +120,7 @@ function kernel_c(X::Matrix,
         n = size(X,1)
         res = zeros(n)
         for i = 1:n
-            res[i] = e^(-model.gamma*sumabs2(X[i,:]-y))
+            res[i] = e^(-model.gamma*sum(abs2, X[i,:]-y))
         end
         return res
     end
