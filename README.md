@@ -72,7 +72,7 @@ Let's first try the overall functionality test.
 
 ```julia
 using LightML
-test_LSC()
+LightML.test_LSC()
 ```
 
 
@@ -88,7 +88,7 @@ test_LSC()
 
 ```julia
 using LightML
-demo()
+LightML.demo()
 ```
 
 <p align="center">
@@ -97,7 +97,6 @@ demo()
 <p align="center" style="color:rgb(220,220,220);">
     Figure 2: The Digit Dataset using Demo algorithms
 </p>
-
 
 ## Current Implementations
 
