@@ -369,7 +369,7 @@ function test_ClassificationTree()
     predictions = predict(model,X_test)
     y_test = unhot(y_test)
     predictions = unhot(predictions)
-    print("classification accuracy", accuracy(y_test, predictions))
+    println("classification accuracy ", accuracy(y_test, predictions))
     #PCA
 
     #pca_model = PCA()
