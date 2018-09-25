@@ -41,7 +41,7 @@ function transform_(model::LDA, X::Matrix, y::Vector)
 
     if model.method == "svd"
         U, S, V = svd(Sw)
-        S = diagm(S)
+        S = LinearAlgebra.diagm(S)
         Sw_inverse = V * pinv(S) * U'
         A = Sw_inverse * Sb
     else

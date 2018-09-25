@@ -2,9 +2,8 @@
 
 
 function spec_clustering(data,k)
-
     w = computing_similarity(data)
-    d = diagm(vec(sum(w,1)))
+    d = LinearAlgebra.diagm(vec(sum(w,1)))
     l = d-w
     temp = eig(l)
     temp = temp[2]
