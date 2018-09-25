@@ -1,4 +1,5 @@
-
+eye(T, n) = Matrix{T}(LinearAlgebra.I, (n, n))
+eye(n) = eye(Int, n)
 
 function one_hot(y)
     n = length(unique(y))
