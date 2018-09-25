@@ -5,7 +5,7 @@ function one_hot(y)
     if minimum(y) == 0
         return eye(n)[(y+1),:]
     elseif minimum(y) == -1 && n == 2
-        y = trunc(Int64,(y + 1)/2+1)
+        y = trunc.(Int64, (y .+ 1) / 2 .+ 1)
         return eye(2)[y,:]
     end
     return eye(n)[y,:]
