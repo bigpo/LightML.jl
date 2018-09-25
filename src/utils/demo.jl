@@ -7,7 +7,7 @@ function demo()
     # ...........
     #  LOAD DATA
     # ...........
-    data = dat.load_digits()
+    data = dat[:load_digits]()
     digit1 = 1
     digit2 = 8
     idx = vcat(find(data["target"] .== digit1), find(data["target"] .== digit2))
