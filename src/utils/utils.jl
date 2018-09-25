@@ -122,7 +122,7 @@ function normalize_(X::Matrix)
     mean_ = StatsBase.mean(X, dims=(1))
     for i = 1:size(X,2)
         if std_[i] != 0
-            X[:,i] = (X[:, i] - mean_[i])/std_[i]
+            X[:,i] .= (X[:, i] .- mean_[i])/std_[i]
         end
     end
     return X
