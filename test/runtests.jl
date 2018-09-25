@@ -1,5 +1,4 @@
 using LightML
 using Test
 
-# write your own tests here
-@test 1 == 1
+include("large_scale_spectral_clustering_test.jl")

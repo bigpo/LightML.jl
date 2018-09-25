@@ -73,7 +73,7 @@ function plot_in_2d(model::LSC, X::Matrix)
 end
 
 function test_LSC()
-    path_ = "../data"
+    path_ = joinpath("..", "..", "resources", "data")
     data_name = ["smiley", "spirals", "shapes", "cassini1"]
     datasets = copy(data_name)
     for i in 1:4
