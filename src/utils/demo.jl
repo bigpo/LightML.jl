@@ -32,8 +32,8 @@ function demo()
     #  TRAIN / TEST SPLIT
     # ..........................
     X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8)
-    rescaled_y_train = (y_train + 1) ./ 2
-    rescaled_y_test = (y_test + 1) ./2
+    rescaled_y_train = (y_train .+ 1) ./ 2
+    rescaled_y_test = (y_test .+ 1) ./2
     # .......
     #  SETUP
     # .......
