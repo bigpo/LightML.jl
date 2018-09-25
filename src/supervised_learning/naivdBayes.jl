@@ -53,7 +53,7 @@ function predict(model::NaiveBayes,
     for i = 1:model.n_class
         prior = log(model.class_priors[i])
         cond = sum(log_pdf(model, X, i))
-        temp[i] = prior + cond
+        temp[i] = prior + real(cond) # GJL WARNING ! This may be a bug. Should cond be complex ?
     end
     res = softmax(temp)
     class = model.class_[res]
