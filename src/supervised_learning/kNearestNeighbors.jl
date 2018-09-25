@@ -97,7 +97,7 @@ end
 
 
 function dist(x::Vector, y::Vector, dist_func::Euclidean)
-    return norm(x-y)
+    return LinearAlgebra.norm(x-y)
 end
 
 
