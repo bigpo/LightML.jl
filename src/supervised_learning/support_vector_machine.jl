@@ -95,7 +95,7 @@ function train!(model::SVM)
             end
 
             # Check convergence
-            diff = norm(model.alpha - alpha_prev)
+            diff = LinearAlgebra.norm(model.alpha - alpha_prev)
             if diff < model.tol
                 break
             end
@@ -105,7 +105,7 @@ function train!(model::SVM)
     #println("Convergence has reached after $(iters). for $(model.kernel)")
 
     # Save support vectors index
-    model.sv_indx = find(model.alpha .> 0)
+    model.sv_indx = findall(!iszero, model.alpha .> 0)
 
 end
 
@@ -120,7 +120,7 @@ function kernel_c(X::Matrix,
         n = size(X,1)
         res = zeros(n)
         for i = 1:n
-            res[i] = e^(-model.gamma*sum(abs2, X[i,:]-y))
+            res[i] = MathConstants.e^(-model.gamma*sum(abs2, X[i,:]-y))
         end
         return res
     end

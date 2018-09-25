@@ -13,7 +13,7 @@ function one_hot(y)
 end
 
 function softmax(x::Vector)
-    x = exp(x)
+    x = exp.(x)
     pos = x./sum(x)
     return argmax(pos)
 end

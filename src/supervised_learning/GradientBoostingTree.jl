@@ -98,7 +98,7 @@ function predict(model::GradientBoosting,
     end
 
     if typeof(model) <: GradientBoostingClassifier
-        return sign(softmax(y_pred)-1.5)
+        return sign.(softmax(y_pred) .- 1.5)
     end
     return y_pred
 
