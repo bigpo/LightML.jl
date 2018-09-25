@@ -6,7 +6,7 @@
 
 ### About
 
-LightML.jl is a collection of reimplementation of general machine learning algorithm in Julia. 
+LightML.jl is a collection of reimplementations of general machine learning algorithms in Julia.
 
 The purpose of this project is purely self-educational.
 
@@ -18,13 +18,14 @@ The branch `master` is synced with `master` at [https://github.com/memoiry/Light
 
 ### Why?
 
-This project is targeting people who want to learn internals of ml algorithms or implement them from scratch.
+This project is targeting people who want to learn internals of machine learning algorithms or implement them from scratch.
 
 The code is much easier to follow than the optimized libraries and easier to play with.
 
-All algorithms are implemented in Julia. 
+All algorithms are implemented in Julia.
 
-You should access test function of every implementation for its usage in detail. Every model is actually constructed in a similar manner.
+You should access the test function of every implementation for its usage in detail (See below).
+Every model is actually constructed in a similar manner.
 
 ### Installation
 
@@ -36,9 +37,9 @@ julia> pkg"add Gadfly#master"
 julia> pkg"add Hexagons"
 ```
 
-Make sure you have correct `python` dependency. You can use the Conda Julia package to install more Python packages, and import Conda to print the Conda.PYTHONDIR directory where python was installed. On GNU/Linux systems, PyCall will default to using the python program (if any) in your PATH.
+Make sure you have the correct `python` dependency. You can use the Conda Julia package to install more Python packages, and import Conda to print the Conda.PYTHONDIR directory where python was installed. On GNU/Linux systems, PyCall will default to using the python program (if any) in your PATH.
 
-The advantage of a Conda-based configuration is particularly compelling if you are installing PyCall in order to use packages like PyPlot.jl or SymPy.jl, as these can then automatically install their Python dependencies. 
+The advantage of a Conda-based configuration is particularly compelling if you are installing PyCall in order to use packages like PyPlot.jl or SymPy.jl, as these can then automatically install their Python dependencies.
 
 ```julia
 ENV["PYTHON"]=""
@@ -127,7 +128,7 @@ demo()
 - [Spectral Clustering](src/unsupervised_learning/spectralCluster.jl)
 - [Large Scale Spectral Clustering](src/unsupervised_learning/largeScaleSpectralClustering.jl)
 
-#### Test Example available 
+#### Test Examples available
 
 - test_ClassificationTree()
 - test_RegressionTree()
@@ -155,7 +156,7 @@ demo()
 
 Please examine the [todo list](todo.md) for contribution detials.
 
-Any Pull request is welcome. 
+Any Pull request is welcome.
 
 ## Selected Examples
 
@@ -253,5 +254,3 @@ test_PCA()
 <p align="center" style="color:rgb(220,220,220);">
     Figure 9: The Digit Dataset using PCA
 </p>
-
-
