@@ -18,7 +18,7 @@ end
 
 
 function train!(model::PCA, X::Matrix)
-    model.mean_ = vec(mean(X,1))
+    model.mean_ = vec(StatsBase.mean(X,dims=(1)))
     n_sample = size(X, 1)
     X_de_mean = X - repmat(model.mean_', n_sample, 1)
 
