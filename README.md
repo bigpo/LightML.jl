@@ -68,13 +68,13 @@ Pkg.clone("https://github.com/memoiry/LightML.jl")
 
 ### Running Implementations
 
-Let's first try the overall functionality test.
-
+Let's first try the large-scale spectral clustering example.
 ```julia
-using LightML
-LightML.test_LSC()
+julia> using LightML
+julia> LightML.load_examples()
+julia> ? LSC_example
+julia> LSC_example()
 ```
-
 
 <p align="center">
     <img src="https://ooo.0o0.ooo/2017/03/25/58d640c2c7a1a.png" width="640">

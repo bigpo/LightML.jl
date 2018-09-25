@@ -15,8 +15,11 @@ import LinearAlgebra
 import StatsBase
 import Random
 
-const dat = PyNULL()
+const package_dir = joinpath(@__DIR__, "..")
+const examples_dir = joinpath(@__DIR__, "..", "examples")
+const data_dir = joinpath(@__DIR__, "..", "resources", "data")
 
+const dat = PyNULL()
 function __init__()
     copy!(dat, pyimport_conda("sklearn.datasets", "sklearn"))
 end
@@ -123,5 +126,6 @@ include("unsupervised_learning/largeScaleSpectralClustering.jl")
 
 include("utils/utils.jl")
 include("utils/demo.jl")
+include("utils/examples.jl")
 
 end # module LightML
