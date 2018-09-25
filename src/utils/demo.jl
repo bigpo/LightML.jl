@@ -10,7 +10,7 @@ function demo()
     data = dat[:load_digits]()
     digit1 = 1
     digit2 = 8
-    idx = vcat(find(data["target"] .== digit1), find(data["target"] .== digit2))
+    idx = vcat(findall(!iszero, data["target"] .== digit1), findall(!iszero, data["target"] .== digit2))
     y = data["target"][idx]
     # Change labels to {0, 1}
     y[y .== digit1] = -1
