@@ -347,11 +347,11 @@ end
 
 function split_at_feature(X, feature_i, threshold)
     if typeof(threshold) <: Real
-        ind1 = find(X[:,feature_i] .<= threshold)
-        ind2 = find(X[:,feature_i] .> threshold)
+        ind1 = findall(!iszero, X[:,feature_i] .<= threshold)
+        ind2 = findall(!iszero, X[:,feature_i] .> threshold)
     elseif typeof(threshhold) <: String
-        ind1 = find(X[:,feature_i] .== threshold)
-        ind2 = find(X[:,feature_i] .!= threshold)
+        ind1 = findall(!iszero, X[:,feature_i] .== threshold)
+        ind2 = findall(!iszero, X[:,feature_i] .!= threshold)
     end
     X_1 = X[ind1,:]
     X_2 = X[ind2,:]
