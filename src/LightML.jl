@@ -13,7 +13,11 @@ import Printf
 import DelimitedFiles
 import LinearAlgebra
 
-@pyimport sklearn.datasets as dat
+const dat = PyNULL()
+
+function __init__()
+    copy!(dat, pyimport_conda("sklearn.datasets", "sklearn"))
+end
 
 export
     test_LinearRegression,
