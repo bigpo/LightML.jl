@@ -4,7 +4,7 @@ eye(n) = eye(Int, n)
 function one_hot(y)
     n = length(unique(y))
     if minimum(y) == 0
-        return eye(n)[(y+1),:]
+        return eye(n)[(y.+ 1),:]
     elseif minimum(y) == -1 && n == 2
         y = trunc.(Int64, (y .+ 1) / 2 .+ 1)
         return eye(2)[y,:]
@@ -223,7 +223,7 @@ function make_reg(;n_samples = 200,
 end
 
 function make_iris()
-    data= dat.load_iris()
+    data= dat[:load_iris]()
     X = data["data"]
     y = data["target"]
     X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
