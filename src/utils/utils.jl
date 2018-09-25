@@ -39,7 +39,7 @@ function get_random_subsets(X, y , n_subsets;replacement = true)
     n_sample, n_feature = size(X)
 
     X_y = hcat(X, y)
-    X_y = X_y[shuffle(1:n_sample), :]
+    X_y = X_y[Random.shuffle(1:n_sample), :]
     subsample_size = trunc(Int64,n_sample / 2)
     if replacement == true
         subsample_size = n_sample

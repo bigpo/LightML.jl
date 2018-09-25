@@ -127,7 +127,7 @@ function train!(model::LogisticRegression,
     iter_count = 0
     while abs(errors_norm) > model.tolerance && iter_count < model.max_iters
         model.params -= model.C*(X' * (sigmoid(X * model.params) - y))
-        errors_norm = norm(predict(model, X[:, 1:(end-1)]) - y)
+        errors_norm = LinearAlgebra.norm(predict(model, X[:, 1:(end-1)]) - y)
         #println("Epoch: $(iter_count): current errors norm is $(errors_norm)")
         iter_count = iter_count + 1
     end

@@ -30,8 +30,8 @@ function train!(model::NaiveBayes, X::Matrix, y::Vector)
 
     for (i,class) in enumerate(model.class_)
         X_temp = X[vec(y.==class),:]
-        model.class_mean[:,i] = mean(X_temp,1)
-        model.class_var[:,i] = var(X_temp,1)
+        model.class_mean[:,i] = StatsBase.mean(X_temp, dims=(1))
+        model.class_var[:,i] = StatsBase.var(X_temp, dims=(1))
         model.class_priors[i] = size(X_temp,1)/n_sample
     end
 
