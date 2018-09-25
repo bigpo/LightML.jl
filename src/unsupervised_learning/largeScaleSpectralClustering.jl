@@ -58,13 +58,13 @@ end
 
 function train!(model::LSC, X::Matrix)
     if size(X,1) > size(X,2)
-        X = transpose(X)
+        X = copy(transpose(X))
     end
     landmarks = get_landmarks(X, model.n_landmarks, method = model.method)
     Z_hat = compose_sparse_Z_hat_matrix(X, landmarks, model.bandwidth,
                                         model.non_zero_landmarks)
     svd_result = LinearAlgebra.svd(transpose(Z_hat))
-    temp = transpose(svd_result[1][:,1:model.n_clusters])
+    temp = transpose(svd_result.U[:,1:model.n_clusters])
     model.cluster_result = kmeans(temp, model.n_clusters).assignments
 end
 
