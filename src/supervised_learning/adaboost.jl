@@ -1,16 +1,12 @@
-
 mutable struct Adaboost
     n_clf::Int64
     clf::Matrix
 end
 
-function Adaboost(;
-                  n_clf::Int64 = 10
-                  )
+function Adaboost(; n_clf::Int64 = 10)
     clf = zeros(4, n_clf)
     return Adaboost(n_clf, clf)
 end
-
 
 function train!(model::Adaboost, X::Matrix, y::Vector)
     n_sample, n_feature = size(X)
@@ -62,11 +58,11 @@ function train!(model::Adaboost, X::Matrix, y::Vector)
         end
         model.clf[:, i] = [feature_index, threshold, polarity, alpha]
     end
+    return nothing
 end
 
-function predict(model::Adaboost,
-                 x::Matrix)
-    n = size(x,1)
+function predict(model::Adaboost, x::Matrix)
+    n = size(x, 1)
     res = zeros(n)
     for i = 1:n
         res[i] = predict(model, x[i,:])
@@ -74,8 +70,7 @@ function predict(model::Adaboost,
     return res
 end
 
-function predict(model::Adaboost,
-                 x::Vector)
+function predict(model::Adaboost, x::Vector)
     s = 0
     for i = 1:model.n_clf
         pred = 1
@@ -89,12 +84,8 @@ function predict(model::Adaboost,
         end
         s += alpha * pred
     end
-
     return sign(s)
-
 end
-
-
 
 function test_Adaboost()
     X_train, X_test, y_train, y_test = make_cla(n_features = 8, n_samples = 1000)
@@ -111,5 +102,5 @@ function test_Adaboost()
     pca_model = PCA()
     train!(pca_model, X_test)
     plot_in_2d(pca_model, X_test, predictions, "Adaboost")
-
+    return nothing
 end
