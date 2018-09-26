@@ -88,7 +88,7 @@ function train!(model1::LinearRegression,
 
     global X_global = hcat(X,ones(n_sample))
     global y_global = y
-    cost_d = x -> ForwardDiff.gradient(cost_linear,x)
+    cost_d = x -> ForwardDiff.gradient(cost_linear, x)
     errors_norm = 1e10
     iter_count = 0
     while errors_norm > model.tolerance && iter_count < model.max_iters
@@ -259,15 +259,17 @@ function predict(model::LeastAngleRegression, x)
     return x*model.params
 end
 
+## FIXME: call to add_reg has too few parameters
 function cost_linear(w::Vector)
-    return add_reg(mean_squared_error(y_global, X_global*w),w)
+    mse = mean_squared_error(y_global, X_global * w)
+    return add_reg(mse, w)
 end
 
 function cost_logistic(X, y, w::Vector,model)
    return add_reg(binary_crossentropy(y, sign(sigmoid(X*w))),w, model)
 end
 
-function add_reg(loss,w,model)
+function add_reg(loss, w, model)
     if model.reg == "l1"
         return loss + model.C * sum(abs(w[1:(end-1)]))
     elseif model.reg == "l2"
