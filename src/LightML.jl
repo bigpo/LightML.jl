@@ -23,6 +23,7 @@ const dat = PyNULL()
 function __init__()
     copy!(dat, pyimport_conda("sklearn.datasets", "sklearn"))
 end
+const datasets = dat  # TODO. Replace dat throughout.
 
 export
     test_LinearRegression,
@@ -36,7 +37,6 @@ export
 
     test_kneast_regression,
     test_kneast_classification,
-
 
     test_label_propagation,
 
@@ -79,6 +79,7 @@ export
     LogisticRegression,
     GDA,
     BoostingTree,
+    GradientBoostingClassifier,
     KnnRegression,
     KnnClassifier,
     label_propagation,
@@ -125,7 +126,7 @@ include("unsupervised_learning/largeScaleSpectralClustering.jl")
 # Utils
 
 include("utils/utils.jl")
-include("utils/demo.jl")
+#include("utils/demo.jl")
 include("utils/examples.jl")
 
 end # module LightML

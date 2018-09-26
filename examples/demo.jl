@@ -1,4 +1,16 @@
-function demo()
+using LightML
+import Printf
+#import LightML: LSC
+using DataFrames
+#import DelimitedFiles
+using Gadfly
+
+"""
+    demo(; doplot=true)
+
+Run a demonstration of several machine learning techniques on the digits dataset.
+"""
+function demo(; doplot=true)
     println("+-------------------------------------------+")
     println("|                                           |")
     println("|     LightML.jl demo for digits dataset    |")
@@ -7,7 +19,7 @@ function demo()
     # ...........
     #  LOAD DATA
     # ...........
-    data = dat[:load_digits]()
+    data = LightML.datasets[:load_digits]()
     digit1 = 1
     digit2 = 8
     idx = vcat(findall(!iszero, data["target"] .== digit1), findall(!iszero, data["target"] .== digit2))
@@ -15,11 +27,8 @@ function demo()
     # Change labels to {0, 1}
     y[y .== digit1] .= -1
     y[y .== digit2] .= 1
-
-
     X = data["data"][idx,:]
-    X = normalize_(X)
-
+    X = LightML.normalize_(X)
     println("Dataset: The Digit Dataset (digits $(digit1) and $(digit2))" )
     # ..........................
     #  DIMENSIONALITY REDUCTION
@@ -27,11 +36,10 @@ function demo()
     pca = PCA(n_components=5)
     train!(pca, X) # Reduce to 5 dimensions
     X = transform(pca, X)
-
     # ..........................
     #  TRAIN / TEST SPLIT
     # ..........................
-    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8)
+    X_train, X_test, y_train, y_test = LightML.train_test_split(X, y, train_size=0.8)
     rescaled_y_train = (y_train .+ 1) ./ 2
     rescaled_y_test = (y_test .+ 1) ./2
     # .......
@@ -49,11 +57,9 @@ function demo()
     #lda = LDA()
     gbc = GradientBoostingClassifier(n_clf=20, learning_rate=.9, max_depth=2)
     #xgboost = XGBoost(n_estimators=50, learning_rate=0.5)
-
     # ........
     #  TRAIN
     # ........
-
     println("\tk-nearst")
     train!(knn, X_train, y_train)
     println("\tAdaboost")
@@ -80,9 +86,6 @@ function demo()
     train!(support_vector_machine_linear)
     #println("\tXGBoost")
     #xgboost.fit(X_train, y_train)
-
-
-
     # .........
     #  PREDICT
     # .........
@@ -99,36 +102,31 @@ function demo()
     y_pred["Random Forest"] = predict(random_forest, X_test)
     y_pred["Support Vector Machine, rbf kernel"] = predict(support_vector_machine_rbf, X_test)
     y_pred["Support Vector Machine, linear kernel"] = predict(support_vector_machine_linear, X_test)
-
     #y_pred["XGBoost"] = xgboost.predict(X_test)
-
     # ..........
     #  ACCURACY
     # ..........
     println("Accuracy:")
     for clf in keys(y_pred)
         if clf == "Logistic Regression"
-            temp = accuracy(rescaled_y_test,y_pred[clf])
+            temp = LightML.accuracy(rescaled_y_test,y_pred[clf])
             st = temp * 100
             st = Printf.@sprintf "%.3f" st
             println("\t$(clf): $(st) %")
         else
-            temp = accuracy(y_test,y_pred[clf])
+            temp = LightML.accuracy(y_test,y_pred[clf])
             st = temp * 100
             st = Printf.@sprintf "%.3f" st
             println("\t$(clf): $(st) %")
         end
     end
-
-
-
-
     # .......
     #  PLOT
     # .......
-
-    x1 = X_test[:, 1]
-    x2 = X_test[:, 2]
-    df = DataFrame(x = x1, y = x2, clu = y_test)
-    Gadfly.plot(df, x = "x", y = "y", color = "clu", Geom.point, Guide.title("PCA"))
+    if doplot
+        x1 = X_test[:, 1]
+        x2 = X_test[:, 2]
+        df = DataFrame(x = x1, y = x2, clu = y_test)
+        Gadfly.plot(df, x = "x", y = "y", color = "clu", Geom.point, Guide.title("PCA"))
+    end
 end
