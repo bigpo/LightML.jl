@@ -79,7 +79,6 @@ function update_centroid!(model)
     end
 end
 
-
 function assign_clusters!(model::Kmeans)
     n = size(model.X,1)
     model.clusters = Dict{Integer,Matrix}()
