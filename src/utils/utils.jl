@@ -188,11 +188,9 @@ function binary_crossentropy(actual, predicted)
                            (1 - actual) .* log(1 - predicted)))
 end
 
-
 function sigmoid_tanh(x)
     return 0.5 * (tanh(x) + 1)
 end
-
 
 function sigmoid(x)
     return 1 ./ (1 .+ exp.(-x))
@@ -202,9 +200,8 @@ function sigmoid_prime(x)
     return sigmoid(x) .* (1-sigmoid(x))
 end
 
-
 function make_cla(;n_samples = 1200, n_features = 10, n_classes = 2)
-    X, y = dat.make_classification(n_samples=n_samples, n_features=n_features,
+    X, y = datasets[:make_classification](n_samples=n_samples, n_features=n_features,
                                random_state=1111, n_classes= n_classes)
     # Convert y to {-1, 1}
     y = (y * 2) - 1
@@ -215,7 +212,7 @@ end
 
 function make_reg(;n_samples = 200,
                    n_features = 10)
-    X, y = dat.make_regression(n_samples=n_samples, n_features=n_features, n_targets=1, noise=0.05,
+    X, y = datasets[:make_regression](n_samples=n_samples, n_features=n_features, n_targets=1, noise=0.05,
                            random_state=1111, bias=0.5)
     X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
                                                         rand_seed=1111)
@@ -232,13 +229,13 @@ function make_iris()
 end
 
 function make_blo()
-    X, y = dat.make_blobs(centers=4, n_samples=500, n_features=2,
+    X, y = datasets[:make_blobs](centers=4, n_samples=500, n_features=2,
                           random_state=42)
     return  X, y
 end
 
 function make_digits()
-    data = dat.load_digits()
+    data = datasets[:load_digits]()
     X = data["data"]
     y = data["target"]
     X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
