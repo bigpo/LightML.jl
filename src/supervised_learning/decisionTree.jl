@@ -1,6 +1,4 @@
-abstract type LossFunction
-
-end
+abstract type LossFunction end
 
 mutable struct LogisticLoss <: LossFunction
     obj::Function
@@ -31,7 +29,6 @@ mutable struct LogisticLoss <: LossFunction
 
 end
 
-
 mutable struct SquareLoss <: LossFunction
     obj::Function
     gradient::Function
@@ -55,7 +52,6 @@ mutable struct SquareLoss <: LossFunction
     end
 end
 
-
 mutable struct DecisionNode
     label::Union{Array, Int64, String, Float64}
     feature_index::Integer
@@ -75,9 +71,7 @@ function DecisionNode(;
     return DecisionNode(label, feature_index, threshold,true_branch, false_branch, y_num)
 end
 
-abstract type DecisionTree
-
-end
+abstract type DecisionTree end
 
 mutable struct RegressionTree <: DecisionTree
     root::Union{DecisionNode,String}
@@ -87,7 +81,6 @@ mutable struct RegressionTree <: DecisionTree
     current_depth::Integer
     y_num::Integer
 end
-
 
 mutable struct ClassificationTree <: DecisionTree
     root::Union{DecisionNode,String}
@@ -143,7 +136,6 @@ function RegressionTree(;
         min_samples_split, current_depth, y_num)
 end
 
-
 function train!(model::DecisionTree, X::Matrix, y::Array)
     model.current_depth = 0
     #Normalize
@@ -153,7 +145,6 @@ function train!(model::DecisionTree, X::Matrix, y::Array)
     #y = X_y[:, end]
     model.root = build_tree(model, X, y)
 end
-
 
 function build_tree(model::DecisionTree, X::Matrix, y::Array)
     if typeof(model) <: XGBoostRegressionTree
@@ -214,12 +205,10 @@ function build_tree(model::DecisionTree, X::Matrix, y::Array)
     return DecisionNode(label = leaf_value)
 end
 
-
 function leaf_value_calc(model::XGBoostRegressionTree, y::Array)
     y, y_pred = split_(y)
     nominator = sum(model.loss.gradient(y, y_pred),1)
     denominator = sum(model.loss.hessian(y, y_pred),1)
-
     return nominator ./ denominator
 end
 
@@ -249,7 +238,6 @@ function leaf_value_calc(model::ClassificationTree, y::Array)
     return most_common
 end
 
-
 function split_(y)
     col = trunc(Int,size(y,2)/2)
     return y[:,1:col],y[:,(col+1):end]
@@ -262,7 +250,6 @@ function _gain_(model::XGBoostRegressionTree, y, y_pred)
     return 0.5 * nominator / denominator
 end
 
-
 function impurity_calc(model::XGBoostRegressionTree, y, y1, y2)
     y, y_pred = split_(y)
     y1, y1_pred = split_(y1)
@@ -272,7 +259,6 @@ function impurity_calc(model::XGBoostRegressionTree, y, y1, y2)
     gain = _gain_(model, y, y_pred)
     return true_gain + false_gain - gain
 end
-
 
 function impurity_calc(model::RegressionTree, y, y1, y2)
     var_total = var(y)
@@ -292,7 +278,6 @@ function impurity_calc(model::ClassificationTree, y, y1, y2)
     return entro - (p * calc_entropy(y1) + (1-p) * calc_entropy(y2))
 end
 
-
 function predict(model::DecisionTree,
                  x::Matrix)
     n = size(x,1)
@@ -309,7 +294,6 @@ function predict(model::DecisionTree,
     end
     return res
 end
-
 
 function predict(model::DecisionNode,
                  x::Vector)
@@ -344,7 +328,6 @@ function print_tree(model::DecisionTree)
     end
 end
 
-
 function split_at_feature(X, feature_i, threshold)
     if typeof(threshold) <: Real
         ind1 = findall(!iszero, X[:,feature_i] .<= threshold)
@@ -358,25 +341,22 @@ function split_at_feature(X, feature_i, threshold)
     return X_1, X_2
 end
 
-
-
-function test_ClassificationTree()
-    X_train, X_test, y_train, y_test = make_iris()
-    y_train = one_hot(y_train)
-    y_test = one_hot(y_test)
-    model = ClassificationTree()
-    train!(model,X_train, y_train)
-    predictions = predict(model,X_test)
-    y_test = unhot(y_test)
-    predictions = unhot(predictions)
-    println("classification accuracy ", accuracy(y_test, predictions))
-    #PCA
-
-    #pca_model = PCA()
-    #train!(pca_model, X_test)
-    #plot_in_2d(pca_model, X_test, predictions, "ClassificationTree")
-end
-
+# Moved to ./test
+# function test_ClassificationTree()
+#     X_train, X_test, y_train, y_test = make_iris()
+#     y_train = one_hot(y_train)
+#     y_test = one_hot(y_test)
+#     model = ClassificationTree()
+#     train!(model,X_train, y_train)
+#     predictions = predict(model,X_test)
+#     y_test = unhot(y_test)
+#     predictions = unhot(predictions)
+#     println("classification accuracy ", accuracy(y_test, predictions))
+#     #PCA
+#     #pca_model = PCA()
+#     #train!(pca_model, X_test)
+#     #plot_in_2d(pca_model, X_test, predictions, "ClassificationTree")
+# end
 
 function test_RegressionTree()
     X_train, X_test, y_train, y_test = make_reg(n_features = 1)
