@@ -116,14 +116,14 @@ function initialize_centroid(model::Kmeans)
 end
 
 function find_next_centroid(model, num)
-    mean_cent = vec(StatsBase.mean(model.centroid[1:num,:],1))
+    mean_cent = vec(StatsBase.mean(model.centroid[1:num, :], dims = 1))
     n_sample = size(model.X,1)
     res = zeros(n_sample)
     for i = 1:n_sample
-        res[i] = LinearAlgebra.norm(model.X[i, :] -mean_cent)
+        res[i] = LinearAlgebra.norm(model.X[i, :] - mean_cent)
     end
-    prob = res/sum(res)
-    cum = cumsum(prob, 1)
+    prob = res / sum(res)
+    cum = cumsum(prob, dims = 1)
     r = rand()
     x_sel = model.X[cum .> r,:]
     x_sel = x_sel[1,:]
