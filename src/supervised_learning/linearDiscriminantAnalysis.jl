@@ -79,7 +79,6 @@ function test_LDA()
     train!(model, X_train, y_train)
     predictions = predict(model, X_test)
     println("classification accuracy ", accuracy(y_test, predictions))
-
     plot_in_2d(model, X_train, y_train)
 end
 

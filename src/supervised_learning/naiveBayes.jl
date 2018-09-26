@@ -1,5 +1,3 @@
-
-
 mutable struct NaiveBayes
     n_class::Integer
     class_mean::Matrix
@@ -16,8 +14,6 @@ function NaiveBayes(;
                     class_ = zeros(2))
     return NaiveBayes(n_class, class_mean, class_var, class_priors,class_)
 end
-
-
 
 function train!(model::NaiveBayes, X::Matrix, y::Vector)
     n_feature = size(X,2)
@@ -60,7 +56,6 @@ function predict(model::NaiveBayes,
     return class
 end
 
-
 function log_pdf(model::NaiveBayes,
                  X::Vector,n::Integer)
 
@@ -71,18 +66,13 @@ function log_pdf(model::NaiveBayes,
     return log(n./d)
 end
 
-
-
-
 function test_naive()
     X_train, X_test, y_train, y_test = make_cla()
     model = NaiveBayes()
     train!(model,X_train, y_train)
     predictions = predict(model,X_test)
-    print("classification accuracy", accuracy(y_test, predictions))
-
+    println("classification accuracy ", accuracy(y_test, predictions))
     #PCA
-
     pca_model = PCA()
     train!(pca_model, X_test)
     plot_in_2d(pca_model, X_test, predictions, "Naive Bayes")
