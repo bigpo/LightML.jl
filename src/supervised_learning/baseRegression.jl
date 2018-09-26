@@ -137,7 +137,7 @@ function train!(model1::LeastAngleRegression,
 
     if model.normalize
         for i = 1:n_feature
-            X[:, i] = (X[:, i] - StatsBase.mean(X[:, i])) / norm(X[:, i])
+            X[:, i] = (X[:, i] - StatsBase.mean(X[:, i])) / LinearAlgebra.norm(X[:, i])
         end
 
         y = y - StatsBase.mean(y)
@@ -220,7 +220,7 @@ function train!(model1::LeastAngleRegression,
 
         mu += gamma * ua
 
-        riskI = norm(y - mu)^2 / var_y - n_sample + 2 * i
+        riskI = LinearAlgebra.norm(y - mu)^2 / var_y - n_sample + 2 * i
         if risk < riskI
             break
         end
@@ -313,8 +313,8 @@ function test_LeastAngleRegression()
     X_train, X_test, y_train, y_test = make_reg(n_features = n_features)
 
     for i = 1:n_features
-        X_train[:, i] = (X_train[:, i] - StatsBase.mean(X_train[:, i])) / norm(X_train[:, i])
-        X_test[:, i] = (X_test[:, i] - StatsBase.mean(X_test[:, i])) / norm(X_test[:, i])
+        X_train[:, i] = (X_train[:, i] - StatsBase.mean(X_train[:, i])) / LinearAlgebra.norm(X_train[:, i])
+        X_test[:, i] = (X_test[:, i] - StatsBase.mean(X_test[:, i])) / LinearAlgebra.norm(X_test[:, i])
     end
 
     y_train = y_train - StatsBase.mean(y_train)

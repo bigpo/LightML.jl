@@ -75,7 +75,7 @@ function update_centroid!(model)
             end
             model.clusters[i] = model.clusters[r]
         end
-        model.centroid[i,:] = StatsBase.mean(model.clusters[i],1)
+        model.centroid[i, :] = StatsBase.mean(model.clusters[i], dims=1)
     end
 end
 
@@ -87,9 +87,9 @@ function assign_clusters!(model::Kmeans)
     for i = 1:n
         dist = zeros(model.k)
         for j = 1:length(dist)
-            dist[j] = norm(model.centroid[j,:]-model.X[i,:])
+            dist[j] = LinearAlgebra.norm(model.centroid[j,:]-model.X[i,:])
         end
-        clu = indmin(dist)
+        clu = argmin(dist)
         if haskey(model.clusters,clu)
             model.clusters[clu] = vcat(model.clusters[clu], model.X[i,:]')
             model.clu_ind[clu] = vcat(model.clu_ind[clu], i)
@@ -101,11 +101,10 @@ function assign_clusters!(model::Kmeans)
     end
 end
 
-
 function initialize_centroid(model::Kmeans)
     model.centroid = zeros(model.k, size(model.X,2))
     if model.init == "random"
-        model.centroid = model.X[randperm(size(model.X,1))[1:model.k],:]
+        model.centroid = model.X[Random.randperm(size(model.X,1))[1:model.k],:]
     elseif model.init == "++"
         model.centroid[1,:] = model.X[rand(1:size(model.X,1)),:]
         for i = 2:model.k
@@ -122,7 +121,7 @@ function find_next_centroid(model, num)
     n_sample = size(model.X,1)
     res = zeros(n_sample)
     for i = 1:n_sample
-        res[i] = norm(model.X[i,:]-mean_cent)
+        res[i] = LinearAlgebra.norm(model.X[i, :] -mean_cent)
     end
     prob = res/sum(res)
     cum = cumsum(prob, 1)
@@ -132,14 +131,10 @@ function find_next_centroid(model, num)
     return x_sel
 end
 
-
-
 function is_converged(x::Matrix,
                       y::Matrix)
-    return norm(x-y) == 0
+    return LinearAlgebra.norm(x - y) == 0
 end
-
-
 
 function plot_in_2d(model::Kmeans)
     y_ = []
@@ -153,8 +148,6 @@ function plot_in_2d(model::Kmeans)
         x_[i,:] = model.X[y_[i],:]
     end
     # if not 2d perform PCA
-
-
     #PCA
     if size(x_, 2) > 2
         pca_model = PCA()
@@ -162,8 +155,6 @@ function plot_in_2d(model::Kmeans)
         x_ = transform(pca_model, x_)
         x_ = x_[:, 1:2]
     end
-
-
     x_sep = x_[:,1]
     y_sep = x_[:,2]
     num_ = zeros(model.k)

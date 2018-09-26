@@ -27,7 +27,7 @@ end
 function get_landmarks(X, p;method=:Kmeans)
     if(method == :Random)
         numberOfPoints = size(X, 2);
-        landmarks = X[:, randperm(numberOfPoints)[1:p]];
+        landmarks = X[:, Random.randperm(numberOfPoints)[1:p]];
         return landmarks;
     end
 

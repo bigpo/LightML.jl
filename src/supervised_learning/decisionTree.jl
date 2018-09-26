@@ -168,7 +168,7 @@ function build_tree(model::DecisionTree, X::Matrix, y::Array)
                 num = 8
                 if length(unique_values) >= num
                     num_ = length(unique_values)
-                    indd = randperm(num_)[1:num]
+                    indd = Random.randperm(num_)[1:num]
                     unique_values = unique_values[indd]
                 end
             end

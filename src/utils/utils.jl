@@ -100,7 +100,7 @@ function batch_iter(X, batch_size = 64)
 end
 
 function euc_dist(x,y)
-    return norm(x-y)
+    return LinearAlgebra.norm(x-y)
 end
 
 function l2_dist(X)

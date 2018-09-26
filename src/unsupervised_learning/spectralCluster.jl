@@ -1,6 +1,3 @@
-
-
-
 function spec_clustering(data,k)
     w = computing_similarity(data)
     d = LinearAlgebra.diagm(vec(sum(w,1)))
@@ -14,7 +11,6 @@ function spec_clustering(data,k)
     predict!(model)
     return model
 end
-
 
 function computing_similarity(data)
     n_sample = size(data,1)
@@ -31,7 +27,7 @@ function count_sim(x::Vector,y::Vector;
                    types="Gaussian",
                     gamma = 1)
     if types == "Gaussian"
-        return exp(-gamma*norm(x-y)^2)
+        return exp(-gamma * LinearAlgebra.norm(x - y)^2)
     end
 end
 
@@ -42,6 +38,4 @@ function test_spec_cluster()
     model = spec_clustering(X,clu)
     predictions = model.clusters
     plot_in_2d(model)
-
-
 end

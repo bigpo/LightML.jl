@@ -38,7 +38,7 @@ end
 
 function initialize_(model, X)
     model.weights = ones(model.K) * (1/model.K)
-    model.means = X[randperm(size(X,1))[1:model.K],:]'
+    model.means = X[Random.randperm(size(X,1))[1:model.K],:]'
     rand_cov = cov(X)
     for i = 1:model.K
         model.cov_[i] = rand_cov
