@@ -1,5 +1,3 @@
-
-
 mutable struct NeuralNetwork
     hidden::Union{Vector,Int64}
     act::String
@@ -33,7 +31,7 @@ function train!(model::NeuralNetwork, X::Matrix, y::Vector)
             a[j] = vec(sigmoid(z[j]))
         end
         delta = Dict{Integer, Vector}()
-        error_ = a[depth] - y[r]
+        error_ = a[depth] .- y[r]
         #if i % 1000 == 0
         #    println("$(i) epochs: error $(error_)")
         #end
@@ -54,9 +52,9 @@ end
 function init_weights(model::NeuralNetwork)
     depth_ = size(model.hidden,1)
     for i = 1:(depth_-2)
-        model.weights[i] = 2*rand(model.hidden[i]+1,model.hidden[i+1]+1)-1
+        model.weights[i] = 2 * rand(model.hidden[i] + 1, model.hidden[i+1] + 1) .- 1
     end
-    model.weights[depth_-1] = 2*rand(model.hidden[depth_-1]+1,model.hidden[depth_])-1
+    model.weights[depth_-1] = 2*rand(model.hidden[depth_-1]+1,model.hidden[depth_]) .- 1
 end
 
 function predict(model::NeuralNetwork,
@@ -80,8 +78,6 @@ function predict(model::NeuralNetwork,
     return x
 end
 
-
-
 ## fixed
 
 function test_NeuralNetwork()
@@ -91,5 +87,5 @@ function test_NeuralNetwork()
     model = NeuralNetwork(hidden=10)
     train!(model,X_train, y_train)
     predictions = predict(model,X_train)
-    print("regression msea", mean_squared_error(y_train, predictions))
+    println("regression msea ", mean_squared_error(y_train, predictions))
 end

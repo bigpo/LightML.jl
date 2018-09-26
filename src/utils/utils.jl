@@ -197,7 +197,7 @@ function sigmoid(x)
 end
 
 function sigmoid_prime(x)
-    return sigmoid(x) .* (1-sigmoid(x))
+    return sigmoid(x) .* (1 .- sigmoid(x))
 end
 
 function make_cla(;n_samples = 1200, n_features = 10, n_classes = 2)
