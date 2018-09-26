@@ -1,5 +1,3 @@
-
-
 mutable struct XGBoost <: DecisionTree
     n_estimators::Int64
     learning_rate::Float64
@@ -66,7 +64,7 @@ function predict(model::XGBoost,
         exp_pred = exp(y_pred[i,:])
         y_pred[i,:] = exp_pred / sum(exp_pred)
         print("$(y_pred[i,:])")
-        res[i] = indmax(y_pred[i,:])
+        res[i] = argmax(y_pred[i,:])
     end
     return res-1
 end

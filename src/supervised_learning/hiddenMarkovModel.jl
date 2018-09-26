@@ -1,5 +1,3 @@
-
-
 mutable struct Hmm
     e_to_i::Dict{String, Integer}
     i_to_e::Dict{Integer, String}
@@ -11,9 +9,8 @@ mutable struct Hmm
     data::Matrix
 end
 
-
 function normalize(x)
-    return x./sum(x)
+    return x ./ sum(x)
 end
 
 
@@ -63,7 +60,7 @@ function matching(mode::Hmm)
     for i = 2:n_sample
         for j = 1:n_state
             temp = phi[:, i-1] .* model.A[:, j]
-            eta[j,i] = indmax(temp)
+            eta[j,i] = argmax(temp)
             phi[j,i] = maximum(temp)
         end
         phi[:, i] = phi[:, i] .* model.B[:, model.e_to_i[model.data[i,2]]]
@@ -71,7 +68,7 @@ function matching(mode::Hmm)
     end
     @show eta[:, 1:10]
     state_optim = zeros(n_sample)
-    state_optim[n_sample] = indmax(phi[:, n_sample])
+    state_optim[n_sample] = argmax(phi[:, n_sample])
     for i = (n_sample-1):-1:1
         state_optim[i] = eta[convert(Int,state_optim[i+1]), i+1]
     end

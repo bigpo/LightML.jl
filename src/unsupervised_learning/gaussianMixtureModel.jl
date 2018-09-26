@@ -1,5 +1,3 @@
-
-
 mutable struct GaussianMixture
     K::Integer
     max_iters::Integer
@@ -25,7 +23,6 @@ function GaussianMixture(;
     return GaussianMixture(K, max_iters, method,
      tolerance, weights, means, cov_, responsibilities, likelihood)
 end
-
 
 function train!(model::GaussianMixture, X::Matrix)
     n_sample = size(X,1)
@@ -114,7 +111,7 @@ function predict(model::GaussianMixture,
         likelihood[i] = likeli
     end
     weighted_likelihood = model.weights .* likelihood
-    return indmax(weighted_likelihood)
+    return argmax(weighted_likelihood)
 end
 
 # maybe some problem

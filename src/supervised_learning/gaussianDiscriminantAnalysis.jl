@@ -1,5 +1,3 @@
-
-
 mutable struct GDA
     n_class::Integer
     class_mean::Matrix
@@ -51,7 +49,7 @@ function predict(model::GDA,
         p = log_pdf(model, X, i)
         temp[i] = p[1]
     end
-    res = indmax(exp(temp - log(sum(exp(temp)))))
+    res = argmax(exp(temp - log(sum(exp(temp)))))
     @show res
     class = model.class_[res]
     return class
