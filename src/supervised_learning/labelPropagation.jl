@@ -1,4 +1,3 @@
-
 function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels)
     mat = vcat(Mat_Label, Mat_Unlabel)
     label = vcat(labels, unlabel_data_labels)
@@ -7,7 +6,6 @@ function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels)
     println("Drawing the plot.....Please Wait(Actually Gadfly is quite slow in drawing the first plot)")
     Gadfly.plot(df, x = "x", y = "y", color = "class", Geom.point)
 end
-
 
 function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels :: Array{Float64,2})
     iter_size = size(unlabel_data_labels,2)
@@ -18,14 +16,13 @@ function show_example(Mat_Label, labels, Mat_Unlabel, unlabel_data_labels :: Arr
     label = vcat(labels, unlabel_data_labels)
     group = zeros(num_size * iter_size, 1)
     for i = 1:iter_size
-        group[((i-1)*num_size+1):num_size*i] = i
+        group[((i-1)*num_size+1):num_size*i] .= i
     end
     df = DataFrame(x = mat[:,1], y = mat[:,2], iteration = vec(group), class = label[:])
     println("Computing finished")
     println("drawing the plot....Please Wait")
     Gadfly.plot(df, x = "x", y = "y", xgroup = "iteration", color = "class", Geom.subplot_grid(Geom.point))
 end
-
 
 function loadCircleData(num_data)
     center = [5.0, 5.0]
@@ -77,14 +74,12 @@ function loadBandData(num_unlabel_samples)
     return Mat_Label, labels, Mat_Unlabel
 end
 
-
-function navie_knn(dataSet, query, k)
+function naive_knn(dataSet, query, k)
     numSamples = size(dataSet,1)
     ## step 1: calculate Euclidean distance
     diff = repeat(query,1,numSamples)' - dataSet
     squaredDiff = diff.^2
-    squaredDist = vec(sum(squaredDiff, 2))
-
+    squaredDist = vec(sum(squaredDiff, dims=2))
     sortedDistIndices = sortperm(squaredDist)
     if k > length(sortedDistIndices)
         k = length(sortedDistIndices)
@@ -92,14 +87,13 @@ function navie_knn(dataSet, query, k)
     return sortedDistIndices[1:k]
 end
 
-
 # build a big graph (normalized weight matrix)
 function buildGraph(MatX, kernel_type, rbf_sigma = nothing, knn_num_neighbors = nothing)
     num_samples = size(MatX,1)
     affinity_matrix = zeros(num_samples, num_samples)
     if kernel_type == "rbf"
         if rbf_sigma == nothing
-          error("You should input a sigma of rbf kernel!")
+            error("You should input a sigma of rbf kernel!")
         end
         for i in 1:num_samples
             row_sum = 0.0
@@ -112,20 +106,17 @@ function buildGraph(MatX, kernel_type, rbf_sigma = nothing, knn_num_neighbors = 
         end
     elseif kernel_type == "knn"
         if knn_num_neighbors == nothing
-          error("You should input a k of knn kernel!")
+            error("You should input a k of knn kernel!")
         end
         for i in 1:num_samples
-          k_neighbors = navie_knn(MatX, MatX[i, :], knn_num_neighbors)
-          affinity_matrix[i, k_neighbors] = 1.0 / knn_num_neighbors
+            k_neighbors = naive_knn(MatX, MatX[i, :], knn_num_neighbors)
+            affinity_matrix[i, k_neighbors] .= 1.0 / knn_num_neighbors
         end
     else
-        erro("Not support kernel type! You can use knn or rbf!")
+        error("Not support kernel type! You can use knn or rbf!")
     end
-
     return affinity_matrix
 end
-
-
 
 # label propagation
 function label_propagation(Mat_Label, Mat_Unlabel, labels; kernel_type = "rbf", rbf_sigma = 1.5,
@@ -136,7 +127,6 @@ function label_propagation(Mat_Label, Mat_Unlabel, labels; kernel_type = "rbf", 
     num_samples = num_label_samples + num_unlabel_samples
     labels_list = unique(labels)
     num_classes = length(labels_list)
-
     MatX = vcat(Mat_Label, Mat_Unlabel)
     clamp_data_label = zeros(num_label_samples, num_classes)
     if any(labels == 0)
@@ -149,16 +139,14 @@ function label_propagation(Mat_Label, Mat_Unlabel, labels; kernel_type = "rbf", 
       end
     end
     label_function = zeros(num_samples, num_classes)
-    label_function[1:num_label_samples,:] = clamp_data_label
-    label_function[num_label_samples+1:num_samples,:] = -1
-
+    label_function[1:num_label_samples, :] = clamp_data_label
+    label_function[num_label_samples + 1:num_samples, :] .= -1
     # graph construction
     affinity_matrix = buildGraph(MatX, kernel_type, rbf_sigma, knn_num_neighbors)
-
     # start to propagation
     iter = 0;
     pre_label_function = zeros(num_samples, num_classes)
-    changed = sum(abs(pre_label_function - label_function))
+    changed = sum(abs.(pre_label_function - label_function))
     while iter < max_iter && changed > tol
       ##if iter % 1 == 0
       #  println("---> Iteration $(iter)/$(max_iter), changed: $changed")
@@ -173,12 +161,12 @@ function label_propagation(Mat_Label, Mat_Unlabel, labels; kernel_type = "rbf", 
       label_function[1 : num_label_samples, :] = clamp_data_label
 
       # check converge
-      changed = sum(abs(pre_label_function - label_function))
+      changed = sum(abs.(pre_label_function - label_function))
     end
     # get terminate label of unlabeled data
     unlabel_data_labels = zeros(num_unlabel_samples)
     for i in 1:num_unlabel_samples
-      unlabel_data_labels[i] = indmax(label_function[i+num_label_samples,:])
+      unlabel_data_labels[i] = argmax(label_function[i+num_label_samples,:])
     end
     return unlabel_data_labels
   end
@@ -232,21 +220,20 @@ function label_propagation(affinity_matrix, labels; kernel_type = "rbf", rbf_sig
     # get terminate label of unlabeled data
     unlabel_data_labels = zeros(num_unlabel_samples)
     for i in 1:num_unlabel_samples
-      unlabel_data_labels[i] = indmax(label_function[i+num_label_samples,:])
+      unlabel_data_labels[i] = argmax(label_function[i+num_label_samples,:])
     end
     return unlabel_data_labels
-  end
-
+end
 
 function test_label_propagation()
-  num_unlabel_samples = 800
-  Mat_Label, labels, Mat_Unlabel = loadCircleData(num_unlabel_samples)
-  iter = round(linspace(1,70,5))
-  res = []
-  for i in iter
-      unlabel_data_labels = label_propagation(Mat_Label, Mat_Unlabel, labels, kernel_type = "knn", knn_num_neighbors = 10, max_iter = i)
-      push!(res, unlabel_data_labels)
-  end
-  res = reduce(hcat, res)
-  show_example(Mat_Label, labels, Mat_Unlabel, res)
+    num_unlabel_samples = 800
+    Mat_Label, labels, Mat_Unlabel = loadCircleData(num_unlabel_samples)
+    iter = round.(range(1, length=5, stop=70))
+    res = []
+    for i in iter
+        unlabel_data_labels = label_propagation(Mat_Label, Mat_Unlabel, labels, kernel_type = "knn", knn_num_neighbors = 10, max_iter = i)
+        push!(res, unlabel_data_labels)
+    end
+    res = reduce(hcat, res)
+    show_example(Mat_Label, labels, Mat_Unlabel, res)
 end
