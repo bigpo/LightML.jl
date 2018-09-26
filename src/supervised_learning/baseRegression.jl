@@ -291,27 +291,21 @@ end
 function test_LogisticRegression(; reg = "l2")
     # Generate a random binary classification problem.
     X_train, X_test, y_train, y_test = make_cla()
-    y_train = (y_train + 1)/2
-    y_test = (y_test + 1)/2
+    y_train = (y_train .+ 1) ./ 2
+    y_test = (y_test .+ 1) ./ 2
     model = LogisticRegression(lr=0.1, max_iters=1000, reg=reg, C=0.01)
     train!(model,X_train, y_train)
     predictions = predict(model,X_test)
     println("classification accuracy: ", accuracy(y_test, predictions))
-
     #PCA
-
     pca_model = PCA()
     train!(pca_model, X_test)
-    plot_in_2d(pca_model, X_test, predictions, "LogisticRegression")
-    return nothing
+    return plot_in_2d(pca_model, X_test, predictions, "LogisticRegression")
 end
 
 function test_LeastAngleRegression()
-
     n_features = 20
-
     X_train, X_test, y_train, y_test = make_reg(n_features = n_features)
-
     for i = 1:n_features
         X_train[:, i] = (X_train[:, i] - StatsBase.mean(X_train[:, i])) / LinearAlgebra.norm(X_train[:, i])
         X_test[:, i] = (X_test[:, i] - StatsBase.mean(X_test[:, i])) / LinearAlgebra.norm(X_test[:, i])
@@ -323,7 +317,6 @@ function test_LeastAngleRegression()
     model = LeastAngleRegression(normalize=false)
     train!(model,X_train, y_train)
     predictions = predict(model,X_test)
-
     print("regression mse: ", mean_squared_error(y_test, predictions))
     return nothing
 end
