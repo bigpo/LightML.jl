@@ -137,10 +137,10 @@ function train!(model1::LeastAngleRegression,
 
     if model.normalize
         for i = 1:n_feature
-            X[:, i] = (X[:, i] - mean(X[:, i])) / norm(X[:, i])
+            X[:, i] = (X[:, i] - StatsBase.mean(X[:, i])) / norm(X[:, i])
         end
 
-        y = y - mean(y)
+        y = y - StatsBase.mean(y)
     end
 
     var_y = var(y)
@@ -271,7 +271,7 @@ function add_reg(loss,w,model)
     if model.reg == "l1"
         return loss + model.C * sum(abs(w[1:(end-1)]))
     elseif model.reg == "l2"
-        return loss + 0.5 * model.C * mean(abs2(w))
+        return loss + 0.5 * model.C * StatsBase.mean(abs2(w))
     end
     return loss
 end
@@ -313,12 +313,12 @@ function test_LeastAngleRegression()
     X_train, X_test, y_train, y_test = make_reg(n_features = n_features)
 
     for i = 1:n_features
-        X_train[:, i] = (X_train[:, i] - mean(X_train[:, i])) / norm(X_train[:, i])
-        X_test[:, i] = (X_test[:, i] - mean(X_test[:, i])) / norm(X_test[:, i])
+        X_train[:, i] = (X_train[:, i] - StatsBase.mean(X_train[:, i])) / norm(X_train[:, i])
+        X_test[:, i] = (X_test[:, i] - StatsBase.mean(X_test[:, i])) / norm(X_test[:, i])
     end
 
-    y_train = y_train - mean(y_train)
-    y_test = y_test - mean(y_test)
+    y_train = y_train - StatsBase.mean(y_train)
+    y_test = y_test - StatsBase.mean(y_test)
 
     model = LeastAngleRegression(normalize=false)
     train!(model,X_train, y_train)

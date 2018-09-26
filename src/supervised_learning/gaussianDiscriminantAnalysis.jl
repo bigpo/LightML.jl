@@ -15,8 +15,6 @@ function GDA(;
     return GDA(n_class, class_mean, class_cov, class_priors,class_)
 end
 
-
-
 function train!(model::GDA, X::Matrix, y::Vector)
     n_feature = size(X,2)
     n_sample = size(X,1)
@@ -27,7 +25,7 @@ function train!(model::GDA, X::Matrix, y::Vector)
     model.class_priors = zeros(model.n_class)
     for (i,class) in enumerate(model.class_)
         X_temp = X[vec(y.==class),:]
-        model.class_mean[:,i] = mean(X_temp,1)
+        model.class_mean[:,i] = StatsBase.mean(X_temp,1)
         model.class_priors[i] = size(X_temp,1)/n_sample
     end
 end
@@ -50,7 +48,6 @@ function predict(model::GDA,
         temp[i] = p[1]
     end
     res = argmax(exp(temp - log(sum(exp(temp)))))
-    @show res
     class = model.class_[res]
     return class
 end

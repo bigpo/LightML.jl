@@ -31,7 +31,7 @@ end
 function train!(model::XGBoost, X::Matrix, y::Vector)
     y = one_hot(y)
     n_sample, n_feature = size(X)
-    model.init_estimate = mean(y, 1)
+    model.init_estimate = StatsBase.mean(y, 1)
     y_pred = repeat(model.init_estimate, size(y,1),1)
     for i in 1:model.n_estimators
         y_and_pred = hcat(y, y_pred)

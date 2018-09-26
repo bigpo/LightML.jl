@@ -75,7 +75,7 @@ function update_centroid!(model)
             end
             model.clusters[i] = model.clusters[r]
         end
-        model.centroid[i,:] = mean(model.clusters[i],1)
+        model.centroid[i,:] = StatsBase.mean(model.clusters[i],1)
     end
 end
 
@@ -118,7 +118,7 @@ function initialize_centroid(model::Kmeans)
 end
 
 function find_next_centroid(model, num)
-    mean_cent = vec(mean(model.centroid[1:num,:],1))
+    mean_cent = vec(StatsBase.mean(model.centroid[1:num,:],1))
     n_sample = size(model.X,1)
     res = zeros(n_sample)
     for i = 1:n_sample
@@ -189,7 +189,6 @@ function plot_in_2d(model::Kmeans)
     Gadfly.plot(df, x = "x", y = "y", color = "cluster",Geom.point)
 end
 
-
 function test_kmeans_speed()
     X, y = make_blo()
     clu = length(unique(y))
@@ -199,7 +198,6 @@ function test_kmeans_speed()
     predict!(model)
     plot_in_2d(model)
 end
-
 
 function test_kmeans_random()
     X, y = make_blo()

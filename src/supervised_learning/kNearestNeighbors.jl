@@ -1,16 +1,10 @@
-
 import StatsBase: countmap
 
-abstract type Dist
+abstract type Dist end
 
-end
+mutable struct Euclidean <: Dist end
 
-mutable struct Euclidean <: Dist
-end
-
-abstract type KNN
-
-end
+abstract type KNN end
 
 mutable struct KnnClassifier <: KNN
     k::Integer
@@ -19,14 +13,12 @@ mutable struct KnnClassifier <: KNN
     y::Vector
 end
 
-
 mutable struct KnnRegression <: KNN
     k::Integer
     dis_func::Dist
     X::Matrix
     y::Vector
 end
-
 
 function KnnClassifier(;
                        k::Integer = 5,
@@ -44,13 +36,10 @@ function KnnRegression(;
     return KnnClassifier(k,dist_func,X,y)
 end
 
-
-
 function train!(model::KnnClassifier, X::Matrix, y::Vector)
     model.X = X
     model.y = y
 end
-
 
 function predict(model::KnnClassifier,
                  x::Matrix)
@@ -92,14 +81,12 @@ function predict(model::KnnRegression,
     end
     ind = sortperm(res)
     y_cos = model.y[ind[1:model.k]]
-    return mean(y_cos)
+    return StatsBase.mean(y_cos)
 end
-
 
 function dist(x::Vector, y::Vector, dist_func::Euclidean)
     return LinearAlgebra.norm(x-y)
 end
-
 
 function test_kneast_regression()
 
@@ -120,12 +107,8 @@ function test_kneast_classification()
     train!(model,X_train, y_train)
     predictions = predict(model,X_test)
     print("classification accuracy", accuracy(y_test, predictions))
-
-
     #PCA
-
     pca_model = PCA()
     train!(pca_model, X_test)
     plot_in_2d(pca_model, X_test, predictions, "kneast_classification")
-
 end

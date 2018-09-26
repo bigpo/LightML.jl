@@ -204,7 +204,7 @@ function make_cla(;n_samples = 1200, n_features = 10, n_classes = 2)
     X, y = datasets[:make_classification](n_samples=n_samples, n_features=n_features,
                                random_state=1111, n_classes= n_classes)
     # Convert y to {-1, 1}
-    y = (y * 2) - 1
+    y = (y * 2) .- 1
     X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8,
                                                         rand_seed=1111)
     X_train, X_test, y_train, y_test

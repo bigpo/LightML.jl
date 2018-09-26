@@ -213,7 +213,7 @@ function leaf_value_calc(model::XGBoostRegressionTree, y::Array)
 end
 
 function leaf_value_calc(model::RegressionTree, y::Array)
-    return mean(y)
+    return StatsBase.mean(y)
 end
 
 function leaf_value_calc(model::ClassificationTree, y::Array)
