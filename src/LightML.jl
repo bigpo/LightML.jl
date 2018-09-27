@@ -70,6 +70,7 @@ export
 
     train!,
     predict,
+    accuracy,
 
     RegressionTree,
     ClassificationTree,

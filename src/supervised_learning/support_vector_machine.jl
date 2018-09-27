@@ -146,7 +146,12 @@ function error_(i,model)
     return predict_row(model.X[i,:],model) - model.y[i]
 end
 
-
+function plot_test_svm()
+    (X_test, predictions) = test_svm()
+    pca_model = PCA()
+    train!(pca_model, X_test)
+    return plot_in_2d(pca_model, X_test, predictions, "svm")
+end
 
 function test_svm()
     X_train, X_test, y_train, y_test = make_cla(n_features = 14)
@@ -156,10 +161,6 @@ function test_svm()
         train!(model)
         predictions = predict(model,X_test)
         println("Classification accuracy $(kernel): $(accuracy(y_test, predictions))")
-
     end
-    #PCA
-    pca_model = PCA()
-    train!(pca_model, X_test)
-    plot_in_2d(pca_model, X_test, predictions, "svm")
+    return (X_test, predictions)
 end
