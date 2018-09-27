@@ -88,6 +88,7 @@ julia> LSC_example()
 
 ```julia
 using LightML
+julia> LightML.load_examples()
 LightML.demo()
 ```
 

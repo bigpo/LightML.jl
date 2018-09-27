@@ -341,29 +341,12 @@ function split_at_feature(X, feature_i, threshold)
     return X_1, X_2
 end
 
-# Moved to ./test
-# function test_ClassificationTree()
-#     X_train, X_test, y_train, y_test = make_iris()
-#     y_train = one_hot(y_train)
-#     y_test = one_hot(y_test)
-#     model = ClassificationTree()
-#     train!(model,X_train, y_train)
-#     predictions = predict(model,X_test)
-#     y_test = unhot(y_test)
-#     predictions = unhot(predictions)
-#     println("classification accuracy ", accuracy(y_test, predictions))
-#     #PCA
-#     #pca_model = PCA()
-#     #train!(pca_model, X_test)
-#     #plot_in_2d(pca_model, X_test, predictions, "ClassificationTree")
-# end
-
 function test_RegressionTree()
     X_train, X_test, y_train, y_test = make_reg(n_features = 1)
     model = RegressionTree()
     train!(model,X_train, y_train)
     predictions = predict(model,X_test)
-    print("regression msea", mean_squared_error(y_test, predictions))
+    println("regression msea ", mean_squared_error(y_test, predictions))
     PyPlot.scatter(X_test, y_test, color = "black")
     PyPlot.scatter(X_test, predictions, color = "green")
     legend(loc="upper right",fancybox="true")
