@@ -86,7 +86,7 @@ function train!(model::SVM)
             elseif 0 < model.alpha[j] < model.C
                 model.b = b2
             else
-                model.b = 0.5 * (b1 + b2)
+                model.b = 1//2 * (b1 + b2)
             end
 
             # Check convergence
