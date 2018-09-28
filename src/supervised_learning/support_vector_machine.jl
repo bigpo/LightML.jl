@@ -1,58 +1,53 @@
-
-const Arr = Union{Vector, Matrix}
-
-mutable struct SVM
-    X::Matrix
-    y::Vector
-    C::Float64
-    tol::Float64
-    max_iter::Integer
+mutable struct SVM{T <: Real, V <: Real}
+    X::Matrix{T}
+    y::Vector{V}
+    C::T
+    tol::T
+    max_iter::Int
     kernel::String
-    degree::Integer
-    gamma::Float64
-    alpha::Vector
-    b::Float64
-    sv_indx::Vector
-    K::Matrix
+    degree::Int
+    gamma::T
+    alpha::Vector{T}
+    b::T
+    sv_indx::Vector{Int}
+    K::Matrix{T}
 end
 
-function svm(X::Matrix,
-             y::Vector;
-             C::Float64 = 1.0,
+function svm(X::Matrix{T},
+             y::Vector{V};
+             C::T = one(T),
              kernel::String = "linear",
-             max_iter::Integer = 100,
-             tol::Float64 = 1e-3,
-             degree::Integer = 2,
-             gamma::Float64 = 0.1,
-             alpha::Vector = zeros(10),
-             b::Float64 = 0.0)
+             max_iter::Int = 100,
+             tol::T = one(T) / 10^3,
+             degree::Int = 2,
+             gamma::T = one(1) / 10,
+             alpha::Vector = zeros(T, 10),
+             b::T = zero(T)) where {T <: Real, V <: Real}
     n = size(X,1)
-    alpha = zeros(n)
-    K = zeros(n,n)
+    alpha = zeros(T, n)
+    K = zeros(T, n, n)
     sv_indx = collect(1:n)
-    return SVM(X,y,C,tol,max_iter,kernel, degree,gamma,alpha,b,sv_indx,K)
+    return SVM(X, y, C, tol, max_iter, kernel, degree, gamma, alpha, b, sv_indx, K)
 end
 
-function predict(model::SVM,
-                 x::Arr)
-    n = size(x,1)
-    res = zeros(n)
+function predict(model::SVM, x::Array)
+    n = size(x, 1)
+    res = zeros(eltype(x), n)
     if n == 1
-        res[1] = predict_row(x,model)
+        res[1] = predict_row(x, model)
     else
         for i = 1:n
-            res[i] = predict_row(x[i,:],model)
+            res[i] = predict_row(x[i, :], model)
         end
     end
     return res
 end
 
-
 function train!(model::SVM)
-    n_sample = size(model.X,1)
-    model.K = zeros(n_sample,n_sample)
+    n_sample = size(model.X, 1)
+    model.K = zeros(eltype(model.X), n_sample, n_sample)
     for i in 1:n_sample
-        model.K[:,i] = kernel_c(model.X,model.X[i,:],model)
+        model.K[:, i] .= kernel_c(model.X, model.X[i, :], model)
     end
     # start training
 
@@ -63,14 +58,14 @@ function train!(model::SVM)
         alpha_prev = copy(model.alpha)
         for j = 1:n_sample
             i = rand(1:n_sample)
-            eta = 2.0 * model.K[i, j] - model.K[i, i] - model.K[j, j]
+            eta = 2 * model.K[i, j] - model.K[i, i] - model.K[j, j]
             if eta >= 0
                 continue
             end
-            L, H = count_bounds(i, j,model)
+            L, H = count_bounds(i, j, model)
 
             # Error for current examples
-            e_i, e_j = error_(i,model), error_(j,model)
+            e_i, e_j = error_(i, model), error_(j, model)
 
             # Save old alphas
             alpha_io, alpha_jo = model.alpha[i], model.alpha[j]
@@ -101,12 +96,10 @@ function train!(model::SVM)
             end
         end
     end
-
     #println("Convergence has reached after $(iters). for $(model.kernel)")
-
     # Save support vectors index
     model.sv_indx = findall(!iszero, model.alpha .> 0)
-
+    return nothing
 end
 
 function kernel_c(X::Matrix,
@@ -117,7 +110,7 @@ function kernel_c(X::Matrix,
     elseif model.kernel == "poly"
         return (X * y).^model.degree
     elseif model.kernel == "rbf"
-        n = size(X,1)
+        n = size(X, 1)
         res = zeros(n)
         for i = 1:n
             res[i] = MathConstants.e^(-model.gamma*sum(abs2, X[i,:]-y))
