@@ -189,7 +189,7 @@ function binary_crossentropy(actual, predicted)
 end
 
 function sigmoid_tanh(x)
-    return 0.5 * (tanh(x) + 1)
+    return 1//2 * (tanh(x) + 1)
 end
 
 function sigmoid(x)
